@@ -106,20 +106,62 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import Server.CRUD.*;
+import java.util.Scanner;
 
 public class ClientHandler {
+    private Scanner scanner = new Scanner(System.in);
     private Connection connection;
+    private int id;
+    private int role;
 
 
     public ClientHandler(Connection connection) {
         this.connection = connection;
         //перенести потом в метод run
         try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE login = ? AND password = ?");
+            ResultSet resultSet = null;
             int userCount = getUserCount();
+            if(userCount == 0){
+                preparedStatement = connection.prepareStatement("INSERT INTO user (name, login, password, role) VALUES (?,?,?,2)");
+                //прием данных и их отправка в таблицу
+                preparedStatement.setString(1, scanner.nextLine());//name
+                preparedStatement.setString(2, scanner.nextLine());//login
+                preparedStatement.setString(3, scanner.nextLine());//password
+                preparedStatement.execute();
+                //preparedStatement.setInt(4, 2);
+            }
+            else{
+                while(true) {
+                    //прием данных и их отправка на проверку
+                    preparedStatement.setString(1, scanner.nextLine());//login
+                    preparedStatement.setString(2, scanner.nextLine());//password
+                    resultSet = preparedStatement.executeQuery();
+                    if (resultSet.next()) {
+                        id = resultSet.getInt("user_id");
+                        role = resultSet.getInt("role");
+                        break;
+                    }
+
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        CountryCRUD a = new CountryCRUD(connection,4);
+        while (true){
+            //операции с друмя числами это CRUD
+            //первое число обозначает номер элемента, с которым будет выполняться CRUD
+            //второе число обозначает какая именно операция:1-select, 2-insert, 3-update, 4-delete
+            // прием данных
+            switch (scanner.nextInt()){
+                //Country
+                case 11:{CountryCRUD a = new CountryCRUD(connection,1); break;}
+                case 12:{CountryCRUD a = new CountryCRUD(connection,2); break;}
+                case 13:{CountryCRUD a = new CountryCRUD(connection,3); break;}
+                case 14:{CountryCRUD a = new CountryCRUD(connection,4); break;}
+                default:System.out.println("Error");
+            }
+        }
     }
 
     private int getUserCount() throws SQLException {
