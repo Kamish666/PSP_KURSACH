@@ -179,6 +179,11 @@ public class ClientHandler {
                 case 52:{UserCRUD a = new UserCRUD(connection,2, id); break;}
                 case 53:{UserCRUD a = new UserCRUD(connection,3, id); break;}
                 case 54:{UserCRUD a = new UserCRUD(connection,4, id); break;}
+                //Manufacturer
+                case 61:{ManufacturerCRUD a = new ManufacturerCRUD(connection,1); break;}
+                case 62:{ManufacturerCRUD a = new ManufacturerCRUD(connection,2); break;}
+                case 63:{ManufacturerCRUD a = new ManufacturerCRUD(connection,3); break;}
+                case 64:{ManufacturerCRUD a = new ManufacturerCRUD(connection,4); break;}
                 default:System.out.println("Error");
             }
         }
