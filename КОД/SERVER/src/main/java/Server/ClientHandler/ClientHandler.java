@@ -159,6 +159,16 @@ public class ClientHandler {
                 case 12:{CountryCRUD a = new CountryCRUD(connection,2); break;}
                 case 13:{CountryCRUD a = new CountryCRUD(connection,3); break;}
                 case 14:{CountryCRUD a = new CountryCRUD(connection,4); break;}
+                //Provider
+                case 21:{ProviderCRUD a = new ProviderCRUD(connection,1); break;}
+                case 22:{ProviderCRUD a = new ProviderCRUD(connection,2); break;}
+                case 23:{ProviderCRUD a = new ProviderCRUD(connection,3); break;}
+                case 24:{ProviderCRUD a = new ProviderCRUD(connection,4); break;}
+                //ProductCategory
+                case 31:{ProductCategoryCRUD a = new ProductCategoryCRUD(connection,1); break;}
+                case 32:{ProductCategoryCRUD a = new ProductCategoryCRUD(connection,2); break;}
+                case 33:{ProductCategoryCRUD a = new ProductCategoryCRUD(connection,3); break;}
+                case 34:{ProductCategoryCRUD a = new ProductCategoryCRUD(connection,4); break;}
                 default:System.out.println("Error");
             }
         }
