@@ -127,7 +127,7 @@ public class CountryCRUD {
 
 
     // Метод для добавления данных
-    private void insert() {
+/*    private void insert() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM country Where country_name = ?");
             PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO country (country_name) VALUES (?)");
@@ -152,7 +152,40 @@ public class CountryCRUD {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }*/
+
+    private void insert() {
+        try {
+            PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO country (country_name) VALUES (?)");
+            String name_country = new String();
+            while(true) {
+                while (true) {
+                    //
+                    //получаю название страны
+                    name_country = scanner.nextLine();
+                    if ("окно закрыто".equals(name_country)) {
+                        return;
+                    } else if ("добавить".equals(name_country)) {
+                        try {
+                            name_country = scanner.nextLine();
+                            preparedStatement1.setString(1, name_country);
+                            preparedStatement1.execute();
+                            //отправляем 1
+                            System.out.println("country is now");
+                            break;
+                        } catch (SQLException e) {
+                            //отправляем 0
+                            System.out.println("country is");
+                        }
+
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
 
     // Метод для редактирования данных
     private void update() {
