@@ -169,6 +169,16 @@ public class ClientHandler {
                 case 32:{ProductCategoryCRUD a = new ProductCategoryCRUD(connection,2); break;}
                 case 33:{ProductCategoryCRUD a = new ProductCategoryCRUD(connection,3); break;}
                 case 34:{ProductCategoryCRUD a = new ProductCategoryCRUD(connection,4); break;}
+                //Client
+                case 41:{ClientCRUD a = new ClientCRUD(connection,1); break;}
+                case 42:{ClientCRUD a = new ClientCRUD(connection,2); break;}
+                case 43:{ClientCRUD a = new ClientCRUD(connection,3); break;}
+                case 44:{ClientCRUD a = new ClientCRUD(connection,4); break;}
+                //User
+                case 51:{UserCRUD a = new UserCRUD(connection,1, id); break;}
+                case 52:{UserCRUD a = new UserCRUD(connection,2, id); break;}
+                case 53:{UserCRUD a = new UserCRUD(connection,3, id); break;}
+                case 54:{UserCRUD a = new UserCRUD(connection,4, id); break;}
                 default:System.out.println("Error");
             }
         }
