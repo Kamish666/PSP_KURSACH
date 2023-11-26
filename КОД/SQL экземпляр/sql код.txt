@@ -51,7 +51,7 @@ CREATE TABLE orders (
 );
 
 CREATE TABLE user (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
     login VARCHAR(45),
     password VARCHAR(45),
