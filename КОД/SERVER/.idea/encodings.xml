@@ -2,6 +2,7 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java/Server/CRUD/ManufacturerCRUD.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/Server/CRUD/OrdersCRUD.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/Server/CRUD/ProductCRUD.java" charset="UTF-8" />
     <file url="PROJECT" charset="windows-1251" />
   </component>

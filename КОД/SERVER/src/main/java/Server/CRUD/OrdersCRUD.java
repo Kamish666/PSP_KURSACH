@@ -7,15 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Date;
 
 public class OrdersCRUD {
     private Connection connection;
 
     private List<Order> list = new ArrayList<>();
 
-    private List<String> list1 = new ArrayList<>();
+    private List<Integer> list1 = new ArrayList<>();
     private List<String> list_product = new ArrayList<>();
-    private List<String> list_customer = new ArrayList<>();
+    private List<String> list_client = new ArrayList<>();
 
     private Scanner scanner = new Scanner(System.in);
 
@@ -45,42 +46,45 @@ public class OrdersCRUD {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getString("order_number"));
-                System.out.println(resultSet.getString("order_number"));
+                list1.add(resultSet.getInt("orders_id"));
+                System.out.println(resultSet.getInt("orders_id"));
             }
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM orders WHERE order_number = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM orders WHERE orders_id = ?");
             PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM product WHERE product_id = ?");
-            PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT name FROM customer WHERE customer_id = ?");
+            PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT name FROM client WHERE client_id = ?");
             while (true) {
                 String orderNumber = scanner.nextLine();
 
-                if ("���� �������".equals(orderNumber)) {
+                if ("окно закрыто".equals(orderNumber)) {
                     break;
                 } else {
-                    preparedStatement.setString(1, orderNumber);
+                    preparedStatement.setInt(1, Integer.parseInt(orderNumber));
                     resultSet = preparedStatement.executeQuery();
                     resultSet.next();
-                    int orderId = resultSet.getInt("order_id");
+                    int orderId = resultSet.getInt("orders_id");
                     String productName;
-                    String customerName;
+                    String clientName;
                     int productId = resultSet.getInt("product_id");
-                    int customerId = resultSet.getInt("customer_id");
+                    int clientId = resultSet.getInt("client_id");
+                    int amount = resultSet.getInt("amount");
+                    Date date = resultSet.getDate("date");
 
                     preparedStatement1.setInt(1, productId);
                     resultSet = preparedStatement1.executeQuery();
                     resultSet.next();
                     productName = resultSet.getString("name");
 
-                    preparedStatement2.setInt(1, customerId);
+                    preparedStatement2.setInt(1, clientId);
                     resultSet = preparedStatement2.executeQuery();
                     resultSet.next();
-                    customerName = resultSet.getString("name");
+                    clientName = resultSet.getString("name");
 
                     System.out.println(orderId);
-                    System.out.println(orderNumber);
                     System.out.println(productName);
-                    System.out.println(customerName);
+                    System.out.println(clientName);
+                    System.out.println(amount);
+                    System.out.println(date);
                 }
             }
             resultSet.close();
@@ -90,32 +94,35 @@ public class OrdersCRUD {
         }
     }
 
-    private void insert() {
+/*    private void insert() {
         try {
-            PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO orders (order_number, product_id, customer_id) VALUES (?, ?, ?)");
+            PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO orders (product_id, client_id, date, amount) VALUES (?, ?, ?, ?)");
             String orderNumber = new String();
             String product_name = new String();
-            String customer_name = new String();
+            String client_name = new String();
+            Date date = new Date();
             ListNameProduct();
-            ListNameCustomer();
-            int productId, customerId;
+            ListNameClient();
+            int productId, clientId, amount;
             while (true) {
                 while (true) {
                     orderNumber = scanner.nextLine();
-                    if ("���� �������".equals(orderNumber)) {
+                    if ("окно закрыто".equals(orderNumber)) {
                         return;
-                    } else if ("��������".equals(orderNumber)) {
+                    } else if ("добавить".equals(orderNumber)) {
                         try {
-                            orderNumber = scanner.nextLine();
                             product_name = scanner.nextLine();
-                            customer_name = scanner.nextLine();
+                            client_name = scanner.nextLine();
+                            date = scanner.nextLine();
+                            amount = scanner.nextInt();
 
                             productId = getIdProduct(product_name);
-                            customerId = getIdCustomer(customer_name);
+                            clientId = getIdClient(client_name);
 
-                            preparedStatement1.setString(1, orderNumber);
-                            preparedStatement1.setInt(2, productId);
-                            preparedStatement1.setInt(3, customerId);
+                            preparedStatement1.setInt(1, productId);
+                            preparedStatement1.setInt(2, clientId);
+                            preparedStatement1.setDate(3, date);
+                            preparedStatement1.setInt(4, amount);
                             preparedStatement1.execute();
                             System.out.println("order is now");
                             break;
@@ -128,7 +135,50 @@ public class OrdersCRUD {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }*/
+
+    private void insert() {
+        try {
+            PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO orders (product_id, client_id, date, amount) VALUES (?, ?, ?, ?)");
+            String orderNumber;
+            String product_name;
+            String client_name;
+            Date date = new Date();
+            ListNameProduct();
+            ListNameClient();
+            int productId, clientId, amount;
+
+            while (true) {
+                orderNumber = scanner.nextLine();
+
+                if ("окно закрыто".equals(orderNumber)) {
+                    break;
+                } else if ("добавить".equals(orderNumber)) {
+                    try {
+                        product_name = scanner.nextLine();
+                        client_name = scanner.nextLine();
+                        date = java.sql.Date.valueOf(scanner.nextLine()); // Преобразование строки в java.sql.Date
+                        amount = scanner.nextInt();
+
+                        productId = getIdProduct(product_name);
+                        clientId = getIdClient(client_name);
+
+                        preparedStatement1.setInt(1, productId);
+                        preparedStatement1.setInt(2, clientId);
+                        preparedStatement1.setDate(3, (java.sql.Date) date);
+                        preparedStatement1.setInt(4, amount);
+                        preparedStatement1.execute();
+                        System.out.println("order is now");
+                    } catch (SQLException e) {
+                        System.out.println("Ошибка при добавлении заказа: " + e.getMessage());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
 
     private void update() {
         try {
@@ -136,69 +186,75 @@ public class OrdersCRUD {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                list1.add(resultSet.getString("order_number"));
-                System.out.println(resultSet.getString("order_number"));
+                list1.add(resultSet.getInt("orders_id"));
+                System.out.println(resultSet.getString("orders_id"));
             }
             ListNameProduct();
-            ListNameCustomer();
+            ListNameClient();
 
-            //�������� list_product, list_customer
+            //отправка list_product, list_client
 
             String orderNumber;
-            String newOrderNumber;
             int orderId = 0;
-            int productId, customerId;
+            int productId, clientId, amount;
             String product_name = new String();
-            String customer_name = new String();
-            preparedStatement = connection.prepareStatement("SELECT * FROM orders WHERE order_number = ?");
-            PreparedStatement preparedStatement1 = connection.prepareStatement("UPDATE orders SET order_number = ?, product_id = ?, customer_id = ? WHERE order_id = ?");
-            PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT name FROM product WHERE product_id = ?");
-            PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT name FROM customer WHERE customer_id = ?");
+            String client_name = new String();
+            Date date = new Date();
+            preparedStatement = connection.prepareStatement("SELECT * FROM orders WHERE orders_id = ?");
+            PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM product WHERE product_id = ?");
+            PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT name FROM client WHERE client_id = ?");
+            PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE orders SET product_id = ?, client_id = ?, date = ?, amount = ? WHERE orders_id = ?");
             while (true) {
                 orderNumber = scanner.nextLine();
 
-                if ("���� �������".equals(orderNumber)) {
+                if ("окно закрыто".equals(orderNumber)) {
                     break;
-                } else if ("�������������".equals(orderNumber) && orderId != 0) {
+                } else if ("редактировать".equals(orderNumber) && orderId != 0) {
                     try {
-                        newOrderNumber = scanner.nextLine();
                         product_name = scanner.nextLine();
-                        customer_name = scanner.nextLine();
+                        client_name = scanner.nextLine();
+                        date = java.sql.Date.valueOf(scanner.nextLine()); // Преобразование строки в java.sql.Date
+                        amount = scanner.nextInt();
 
                         productId = getIdProduct(product_name);
-                        customerId = getIdCustomer(customer_name);
+                        clientId = getIdClient(client_name);
 
-                        preparedStatement1.setString(1, newOrderNumber);
-                        preparedStatement1.setInt(2, productId);
-                        preparedStatement1.setInt(3, customerId);
-                        preparedStatement1.setInt(4, orderId);
-                        preparedStatement1.executeUpdate();
+                        preparedStatement3.setInt(1, productId);
+                        preparedStatement3.setInt(2, clientId);
+                        preparedStatement3.setDate(3, (java.sql.Date) date);
+                        preparedStatement3.setInt(4, amount);
+                        preparedStatement3.setInt(5, orderId);
+                        preparedStatement3.execute();
+                        System.out.println("order is now");
                         break;
                     } catch (SQLException e) {
                         System.out.println("order is");
                     }
                 } else {
-                    preparedStatement.setString(1, orderNumber);
+                    preparedStatement.setInt(1, Integer.parseInt(orderNumber));
                     resultSet = preparedStatement.executeQuery();
                     resultSet.next();
-                    orderId = resultSet.getInt("order_id");
+                    orderId = resultSet.getInt("orders_id");
                     productId = resultSet.getInt("product_id");
-                    customerId = resultSet.getInt("customer_id");
+                    clientId = resultSet.getInt("client_id");
+                    amount = resultSet.getInt("amount");
+                    date = resultSet.getDate("date");
 
-                    preparedStatement2.setInt(1, productId);
-                    resultSet = preparedStatement2.executeQuery();
+                    preparedStatement1.setInt(1, productId);
+                    resultSet = preparedStatement1.executeQuery();
                     resultSet.next();
                     product_name = resultSet.getString("name");
 
-                    preparedStatement3.setInt(1, customerId);
-                    resultSet = preparedStatement3.executeQuery();
+                    preparedStatement2.setInt(1, clientId);
+                    resultSet = preparedStatement2.executeQuery();
                     resultSet.next();
-                    customer_name = resultSet.getString("name");
+                    client_name = resultSet.getString("name");
 
                     System.out.println(orderId);
-                    System.out.println(orderNumber);
                     System.out.println(product_name);
-                    System.out.println(customer_name);
+                    System.out.println(client_name);
+                    System.out.println(amount);
+                    System.out.println(date);
                 }
             }
             resultSet.close();
@@ -215,53 +271,58 @@ public class OrdersCRUD {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getString("order_number"));
-                System.out.println(resultSet.getString("order_number"));
+                list1.add(resultSet.getInt("orders_id"));
+                System.out.println(resultSet.getString("orders_id"));
             }
 
             String orderNumber;
             int orderId = 0;
-            preparedStatement = connection.prepareStatement("SELECT * FROM orders WHERE order_number = ?");
-            PreparedStatement preparedStatement1 = connection.prepareStatement("DELETE FROM orders WHERE order_id = ?");
-            PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT name FROM product WHERE product_id = ?");
-            PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT name FROM customer WHERE customer_id = ?");
+            int productId, clientId, amount;
+            String product_name = new String();
+            String client_name = new String();
+            Date date = new Date();
+            preparedStatement = connection.prepareStatement("SELECT * FROM orders WHERE orders_id = ?");
+            PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM product WHERE product_id = ?");
+            PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT name FROM client WHERE client_id = ?");
+            PreparedStatement preparedStatement3 = connection.prepareStatement("DELETE FROM orders WHERE orders_id = ?");
             while (true) {
                 orderNumber = scanner.nextLine();
 
-                if ("���� �������".equals(orderNumber)) {
+                if ("окно закрыто".equals(orderNumber)) {
                     break;
-                } else if ("�������".equals(orderNumber) && orderId != 0) {
+                } else if ("удалить".equals(orderNumber) && orderId != 0) {
                     try {
-                        preparedStatement1.setInt(1, orderId);
-                        preparedStatement1.executeUpdate();
+                        preparedStatement3.setInt(1, orderId);
+                        preparedStatement3.executeUpdate();
                         break;
                     } catch (SQLException e) {
                         System.out.println("order is in use");
                     }
                 } else {
-                    preparedStatement.setString(1, orderNumber);
+                    preparedStatement.setInt(1, Integer.parseInt(orderNumber));
                     resultSet = preparedStatement.executeQuery();
                     resultSet.next();
-                    orderId = resultSet.getInt("order_id");
-                    String product_name;
-                    String customer_name;
-                    int productId = resultSet.getInt("product_id");
-                    int customerId = resultSet.getInt("customer_id");
+                    orderId = resultSet.getInt("orders_id");
+                    productId = resultSet.getInt("product_id");
+                    clientId = resultSet.getInt("client_id");
+                    amount = resultSet.getInt("amount");
+                    date = resultSet.getDate("date");
 
-                    preparedStatement2.setInt(1, productId);
-                    resultSet = preparedStatement2.executeQuery();
+                    preparedStatement1.setInt(1, productId);
+                    resultSet = preparedStatement1.executeQuery();
                     resultSet.next();
                     product_name = resultSet.getString("name");
 
-                    preparedStatement3.setInt(1, customerId);
-                    resultSet = preparedStatement3.executeQuery();
+                    preparedStatement2.setInt(1, clientId);
+                    resultSet = preparedStatement2.executeQuery();
                     resultSet.next();
-                    customer_name = resultSet.getString("name");
+                    client_name = resultSet.getString("name");
 
                     System.out.println(orderId);
-                    System.out.println(orderNumber);
                     System.out.println(product_name);
-                    System.out.println(customer_name);
+                    System.out.println(client_name);
+                    System.out.println(amount);
+                    System.out.println(date);
                 }
             }
             resultSet.close();
@@ -285,18 +346,18 @@ public class OrdersCRUD {
         return id_product;
     }
 
-    private int getIdCustomer(String customer_name) throws SQLException {
-        int id_customer = -1;
+    private int getIdClient(String client_name) throws SQLException {
+        int id_client = -1;
 
-        try (PreparedStatement statement = connection.prepareStatement("SELECT customer_id FROM customer WHERE name = ?")) {
-            statement.setString(1, customer_name);
+        try (PreparedStatement statement = connection.prepareStatement("SELECT client_id FROM client WHERE name = ?")) {
+            statement.setString(1, client_name);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 resultSet.next();
-                id_customer = resultSet.getInt("customer_id");
+                id_client = resultSet.getInt("client_id");
             }
         }
-        return id_customer;
+        return id_client;
     }
 
     private void ListNameProduct() throws SQLException {
@@ -310,13 +371,13 @@ public class OrdersCRUD {
         }
     }
 
-    private void ListNameCustomer() throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement("SELECT name FROM customer");
+    private void ListNameClient() throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT name FROM client");
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                String customerName = resultSet.getString("name");
-                list_customer.add(customerName);
-                System.out.println(customerName);
+                String clientName = resultSet.getString("name");
+                list_client.add(clientName);
+                System.out.println(clientName);
             }
         }
     }
@@ -325,13 +386,13 @@ public class OrdersCRUD {
         private int id;
         private String orderNumber;
         private int productId;
-        private int customerId;
+        private int clientId;
 
-        Order(int id, String orderNumber, int productId, int customerId) {
+        Order(int id, String orderNumber, int productId, int clientId) {
             this.id = id;
             this.orderNumber = orderNumber;
             this.productId = productId;
-            this.customerId = customerId;
+            this.clientId = clientId;
         }
 
         Order() {
@@ -353,12 +414,12 @@ public class OrdersCRUD {
             this.productId = productId;
         }
 
-        public int getCustomerId() {
-            return customerId;
+        public int getClientId() {
+            return clientId;
         }
 
-        public void setCustomerId(int customerId) {
-            this.customerId = customerId;
+        public void setClientId(int clientId) {
+            this.clientId = clientId;
         }
 
         public int getId() {

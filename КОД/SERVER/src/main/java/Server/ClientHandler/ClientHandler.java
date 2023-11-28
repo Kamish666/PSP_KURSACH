@@ -122,7 +122,7 @@ public class ClientHandler {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE login = ? AND password = ?");
             ResultSet resultSet = null;
             int userCount = getUserCount();
-            if(userCount == 0){
+/*            if(userCount == 0){
                 preparedStatement = connection.prepareStatement("INSERT INTO user (name, login, password, role) VALUES (?,?,?,2)");
                 //прием данных и их отправка в таблицу
                 preparedStatement.setString(1, scanner.nextLine());//name
@@ -144,7 +144,7 @@ public class ClientHandler {
                     }
 
                 }
-            }
+            }*/
         } catch (SQLException e) {
             e.printStackTrace();
         }
