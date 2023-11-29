@@ -11,14 +11,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import com.example.client1.controllers.*;
-
 import java.io.*;
 
 public class Main extends Application {
 
     public static void main(String[] args) {
         try {
+            launch(args);
+            if(true) return;
             System.out.println("tcp_ip_5.Server connecting...");
             Socket clientSocket = new Socket("127.0.0.1", 2525);
             System.out.println("Connection established...");
@@ -47,11 +47,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/vhod.fxml"));
         loader.load();
-        Parent root = (Parent)loader.getRoot();
+        Parent root = loader.getRoot();
         Scene scene = new Scene(root);
         primaryStage.setTitle("Your Title");
         primaryStage.setScene(scene);
-        Vhod controller = (Vhod)loader.getController();
+        Vhod controller = loader.getController();
         primaryStage.show();
     }
 }
