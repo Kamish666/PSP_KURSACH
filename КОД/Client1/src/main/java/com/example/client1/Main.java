@@ -6,19 +6,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-
 import java.io.*;
+import java.net.Socket;
 
 public class Main extends Application {
 
     public static void main(String[] args) {
         try {
-            launch(args);
+
+            Client client = new Client("localhost", 2525);
+            client.connect();
+            Integer count = client.receiveInt();
+            System.out.println(count);
+
             if(true) return;
+
+
             System.out.println("tcp_ip_5.Server connecting...");
             Socket clientSocket = new Socket("127.0.0.1", 2525);
             System.out.println("Connection established...");

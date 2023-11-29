@@ -1,41 +1,31 @@
 package Server.CRUD;
 
-import java.sql.Connection;
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class ClientCRUD {
-    private Connection connection;
+public class ClientCRUD extends AbstractCrud {
 
-    private List<Client> list = new ArrayList<>();
+    protected final List<String> list = new ArrayList<>();
 
-    private List<String> list1 = new ArrayList<>();
-
-    private Scanner scanner = new Scanner(System.in);
-
-    public ClientCRUD(Connection connection, int choise) {
-        this.connection = connection;
-
-        switch (choise) {
-            case 1: select(); break;
-            case 2: insert(); break;
-            case 3: update(); break;
-            case 4: delete(); break;
-        }
+    int choice;
+    public ClientCRUD(Socket clientSocket, int choice) throws IOException {
+        super(clientSocket, choice);
     }
 
-    private void select() {
+    @Override
+    protected void select() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM client");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getString("name"));
+                list.add(resultSet.getString("name"));
                 System.out.println(resultSet.getString("name"));
             }
 
@@ -63,12 +53,14 @@ public class ClientCRUD {
         }
     }
 
-    private void insert() {
+    @Override
+    protected void insert() {
+
         try {
             PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO client (name, email) VALUES (?, ?)");
             String name = new String();
             String email = new String();
-            while(true) {
+            while (true) {
                 while (true) {
                     name = scanner.nextLine();
                     if ("окно закрыто".equals(name)) {
@@ -93,14 +85,16 @@ public class ClientCRUD {
         }
     }
 
-    private void update() {
+    @Override
+    protected void update() {
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM client");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getString("name"));
+                list.add(resultSet.getString("name"));
                 System.out.println(resultSet.getString("name"));
             }
 
@@ -144,14 +138,15 @@ public class ClientCRUD {
         }
     }
 
-    private void delete() {
+    @Override
+    protected void delete() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM client");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getString("name"));
+                list.add(resultSet.getString("name"));
                 System.out.println(resultSet.getString("name"));
             }
 
@@ -195,13 +190,14 @@ public class ClientCRUD {
         private String name;
         private String email;
 
-        Client(int id, String name, String email){
+        Client(int id, String name, String email) {
             this.id = id;
             this.name = name;
             this.email = email;
         }
 
-        Client(){}
+        Client() {
+        }
 
         public String getName() {
             return name;

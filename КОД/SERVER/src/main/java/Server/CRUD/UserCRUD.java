@@ -1,43 +1,34 @@
 package Server.CRUD;
 
-import java.sql.Connection;
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class UserCRUD {
-    private Connection connection;
+public class UserCRUD extends AbstractCrud {
     private int id;
 
-    private List<User> list = new ArrayList<>();
+    private List<String> list = new ArrayList<>();
 
-    private List<String> list1 = new ArrayList<>();
 
-    private Scanner scanner = new Scanner(System.in);
-
-    public UserCRUD(Connection connection, int choise, int id) {
-        this.connection = connection;
+    public UserCRUD(Socket clientSocket, int choice, int id) throws IOException {
+        super(clientSocket, choice);
         this.id = id;
 
-        switch (choise) {
-            case 1: select(); break;
-            case 2: insert(); break;
-            case 3: update(); break;
-            case 4: delete(); break;
-        }
     }
 
-    private void select() {
+    @Override
+    protected void select() {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id <> id");
-
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id <> ?");
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getString("name"));
+                list.add(resultSet.getString("name"));
                 System.out.println(resultSet.getString("name"));
             }
 
@@ -69,14 +60,15 @@ public class UserCRUD {
         }
     }
 
-    private void insert() {
+    @Override
+    protected void insert() {
         try {
             PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO user (name, login, password, role) VALUES (?, ?, ?, ?)");
             String name = new String();
             String login = new String();
             String password = new String();
             int role = 0;
-            while(true) {
+            while (true) {
                 while (true) {
                     name = scanner.nextLine();
                     if ("окно закрыто".equals(name)) {
@@ -106,14 +98,15 @@ public class UserCRUD {
         }
     }
 
-    private void update() {
+    @Override
+    protected void update() {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id <> id");
-
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id <> ?");
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getString("name"));
+                list.add(resultSet.getString("name"));
                 System.out.println(resultSet.getString("name"));
             }
 
@@ -166,14 +159,16 @@ public class UserCRUD {
         }
     }
 
-    private void delete() {
+    @Override
+    protected void delete() {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id <> id");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id <> ?");
 
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getString("name"));
+                list.add(resultSet.getString("name"));
                 System.out.println(resultSet.getString("name"));
             }
 
@@ -223,7 +218,7 @@ public class UserCRUD {
         private String password;
         private int role;
 
-        User(int id, String name, String login, String password, int role){
+        User(int id, String name, String login, String password, int role) {
             this.id = id;
             this.name = name;
             this.login = login;
@@ -231,7 +226,8 @@ public class UserCRUD {
             this.role = role;
         }
 
-        User(){}
+        User() {
+        }
 
         public String getName() {
             return name;

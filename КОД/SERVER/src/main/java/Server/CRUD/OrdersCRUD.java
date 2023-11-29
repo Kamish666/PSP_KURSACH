@@ -1,52 +1,38 @@
 package Server.CRUD;
 
-import java.sql.Connection;
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Date;
 
-public class OrdersCRUD {
-    private Connection connection;
+public class OrdersCRUD extends AbstractCrud{
 
-    private List<Order> list = new ArrayList<>();
-
-    private List<Integer> list1 = new ArrayList<>();
+    //какого хуя везде лист стрингов, а тут блять Integer
+    private List<Integer> list = new ArrayList<>();
     private List<String> list_product = new ArrayList<>();
     private List<String> list_client = new ArrayList<>();
 
     private Scanner scanner = new Scanner(System.in);
 
-    public OrdersCRUD(Connection connection, int choise) {
-        this.connection = connection;
+    public OrdersCRUD(Socket clientSocket, int choice) throws IOException {
+        super(clientSocket, choice);
 
-        switch (choise) {
-            case 1:
-                select();
-                break;
-            case 2:
-                insert();
-                break;
-            case 3:
-                update();
-                break;
-            case 4:
-                delete();
-                break;
-        }
     }
 
-    private void select() {
+    @Override
+    protected void select() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM orders");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getInt("orders_id"));
+                list.add(resultSet.getInt("orders_id"));
                 System.out.println(resultSet.getInt("orders_id"));
             }
 
@@ -137,7 +123,8 @@ public class OrdersCRUD {
         }
     }*/
 
-    private void insert() {
+    @Override
+    protected void insert() {
         try {
             PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO orders (product_id, client_id, date, amount) VALUES (?, ?, ?, ?)");
             String orderNumber;
@@ -180,13 +167,14 @@ public class OrdersCRUD {
     }
 
 
-    private void update() {
+    @Override
+    protected void update() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM orders");
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                list1.add(resultSet.getInt("orders_id"));
+                list.add(resultSet.getInt("orders_id"));
                 System.out.println(resultSet.getString("orders_id"));
             }
             ListNameProduct();
@@ -264,14 +252,15 @@ public class OrdersCRUD {
         }
     }
 
-    private void delete() {
+    @Override
+    protected void delete() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM orders");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getInt("orders_id"));
+                list.add(resultSet.getInt("orders_id"));
                 System.out.println(resultSet.getString("orders_id"));
             }
 

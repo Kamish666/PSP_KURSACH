@@ -1,53 +1,24 @@
 package Server.CRUD;
 
-import java.sql.Connection;
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import java.util.Scanner;
+public class CountryCRUD extends AbstractCrud{
 
-public class CountryCRUD {
-    private Connection connection;
+    protected final List<String> list = new ArrayList<>();
 
-    private List<Country> list = new ArrayList<>();
-
-    private List<String> list1 = new ArrayList<>();
-
-    //в итоговаом вариате удалить
-    //
-    private Scanner scanner = new Scanner(System.in);
-    //
-    //
-
-
-    public CountryCRUD(Connection connection, int choise) {
-        this.connection = connection;
-
-
-        switch (choise) {
-            case 1:
-                select();
-                break;
-            case 2:
-                insert();
-                break;
-            case 3:
-                update();
-                break;
-            case 4:
-                delete();
-                break;
-        }
+    public CountryCRUD(Socket clientSocket, int choice) throws IOException {
+        super(clientSocket, choice);
     }
 
 
-    private void select() {
+    @Override
+    protected void select() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM country");
 
@@ -58,7 +29,7 @@ public class CountryCRUD {
                 object.setCountry(resultSet.getString("country_name"));
                 list.add(object);*/
                 //способ 2
-                list1.add(resultSet.getString("country_name"));
+                list.add(resultSet.getString("country_name"));
                 System.out.println(resultSet.getString("country_name"));
             }
 
@@ -154,7 +125,8 @@ public class CountryCRUD {
         }
     }*/
 
-    private void insert() {
+    @Override
+    protected void insert() {
         try {
             PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO country (country_name) VALUES (?)");
             String name_country = new String();
@@ -188,7 +160,9 @@ public class CountryCRUD {
 
 
     // Метод для редактирования данных
-    private void update() {
+    @Override
+    protected void update() {
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM country");
 
@@ -199,7 +173,7 @@ public class CountryCRUD {
                 object.setCountry(resultSet.getString("country_name"));
                 list.add(object);*/
                 //способ 2
-                list1.add(resultSet.getString("country_name"));
+                list.add(resultSet.getString("country_name"));
                 System.out.println(resultSet.getString("country_name"));
             }
 
@@ -253,7 +227,8 @@ public class CountryCRUD {
     }
 
     // Метод для удаления данных
-    private void delete() {
+    @Override
+    protected void delete() {
 /*        try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM country WHERE country_id = ?");
             preparedStatement.setInt(1, countryId);
@@ -275,7 +250,7 @@ public class CountryCRUD {
                 object.setCountry(resultSet.getString("country_name"));
                 list.add(object);*/
                 //способ 2
-                list1.add(resultSet.getString("country_name"));
+                list.add(resultSet.getString("country_name"));
                 System.out.println(resultSet.getString("country_name"));
             }
 

@@ -18,6 +18,9 @@ public class Vhod {
 
     @FXML
     void initialize() {
+
+
+
         logInButton.setOnAction(actionEvent -> {
             String regex = "[A-Za-z0-9_]+";
             String login = loginField.getText();
@@ -32,8 +35,6 @@ public class Vhod {
                 errorMessage.setVisible(true);
                 return;
             }
-
-
         });
 
 

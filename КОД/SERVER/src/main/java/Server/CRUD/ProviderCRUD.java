@@ -1,42 +1,33 @@
 package Server.CRUD;
 
-import java.sql.Connection;
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class ProviderCRUD {
-    private Connection connection;
+public class ProviderCRUD extends AbstractCrud{
 
-    private List<Provider> list = new ArrayList<>();
+    private List<String> list = new ArrayList<>();
 
-    private List<String> list1 = new ArrayList<>();
 
-    private Scanner scanner = new Scanner(System.in);
+    public ProviderCRUD(Socket clientSocket, int choice) throws IOException {
+        super(clientSocket, choice);
 
-    public ProviderCRUD(Connection connection, int choise) {
-        this.connection = connection;
-
-        switch (choise) {
-            case 1: select(); break;
-            case 2: insert(); break;
-            case 3: update(); break;
-            case 4: delete(); break;
-        }
     }
 
-    //функция просмотра
-    private void select() {
+    //функция
+    // @Overrideпросмотра
+    protected void select() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM provider");
 
             ResultSet resultSet = preparedStatement.executeQuery();
             //здесь читается таблица provider и записывается в list1, после чего list1 отперавляется клиенту
             while (resultSet.next()) {
-                list1.add(resultSet.getString("name"));
+                list.add(resultSet.getString("name"));
                 //строку ниже надо удалить
                 System.out.println(resultSet.getString("name"));
             }
@@ -74,8 +65,9 @@ public class ProviderCRUD {
         }
     }
 
-    //функция добавления новых значений
-    private void insert() {
+    //функция
+    // @Overrideдобавления новых значений
+    protected void insert() {
         try {
             PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO provider (name, email) VALUES (?, ?)");
             String name = new String();
@@ -111,15 +103,16 @@ public class ProviderCRUD {
         }
     }
 
-    //функция обновления
-    private void update() {
+    //функция
+    // @Overrideобновления
+    protected void update() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM provider");
 
             ResultSet resultSet = preparedStatement.executeQuery();
             //здесь читается таблица provider и записывается в list1, после чего list1 отперавляется клиенту
             while (resultSet.next()) {
-                list1.add(resultSet.getString("name"));
+                list.add(resultSet.getString("name"));
                 //строку ниже надо удалить
                 System.out.println(resultSet.getString("name"));
             }
@@ -178,7 +171,8 @@ public class ProviderCRUD {
         }
     }
 
-    private void delete() {
+    @Override
+    protected void delete() {
         try {
             //тоже самое, что и в select
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM provider");
@@ -186,7 +180,7 @@ public class ProviderCRUD {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getString("name"));
+                list.add(resultSet.getString("name"));
                 System.out.println(resultSet.getString("name"));
             }
 
