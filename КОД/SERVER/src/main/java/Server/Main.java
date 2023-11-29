@@ -1,4 +1,3 @@
-/*
 package Server;
 
 import Server.СonnectDB.*;
@@ -28,6 +27,7 @@ public class Main {
                     Socket clientAccepted = serverSocket.accept();
                     System.out.println("Connection established...");
                     String socketInfo = "Клиент " + clientAccepted.getInetAddress() + ":" + clientAccepted.getPort() + " подключен.";
+                    System.out.println(socketInfo);
 
                     Thread clientThread = new Thread(new ClientHandler(clientAccepted, connection));
                     clientThread.start();
@@ -46,7 +46,6 @@ public class Main {
         }
     }
 }
-*/
 
 
 
@@ -96,7 +95,7 @@ public class Main {
 
 
 
-package Server;
+/*package Server;
 
 import Server.СonnectDB.*;
 import Server.ClientHandler.*;
@@ -124,5 +123,5 @@ public class Main {
             e.printStackTrace();
         }
     }
-}
+}*/
 
