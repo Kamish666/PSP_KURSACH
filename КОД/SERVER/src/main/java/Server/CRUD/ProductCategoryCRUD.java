@@ -1,41 +1,33 @@
 package Server.CRUD;
 
-import java.sql.Connection;
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class ProductCategoryCRUD {
-    private Connection connection;
+public class ProductCategoryCRUD extends AbstractCrud{
+    protected final List<String> list = new ArrayList<>();
 
-    private List<ProductCategory> list = new ArrayList<>();
 
-    private List<String> list1 = new ArrayList<>();
 
-    private Scanner scanner = new Scanner(System.in);
 
-    public ProductCategoryCRUD(Connection connection, int choise) {
-        this.connection = connection;
+    public ProductCategoryCRUD(Socket clientSocket, int choice) throws IOException {
+        super(clientSocket, choice);
 
-        switch (choise) {
-            case 1: select(); break;
-            case 2: insert(); break;
-            case 3: update(); break;
-            case 4: delete(); break;
-        }
     }
 
-    private void select() {
+    @Override
+    protected void select() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM product_category");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getString("category"));
+                list.add(resultSet.getString("category"));
                 System.out.println(resultSet.getString("category"));
             }
 
@@ -63,7 +55,8 @@ public class ProductCategoryCRUD {
         }
     }
 
-    private void insert() {
+    @Override
+    protected void insert() {
         try {
             PreparedStatement preparedStatement1 = connection.prepareStatement("INSERT INTO product_category (category, definition) VALUES (?, ?)");
             String category = new String();
@@ -93,14 +86,15 @@ public class ProductCategoryCRUD {
         }
     }
 
-    private void update() {
+    @Override
+    protected void update() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM product_category");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getString("category"));
+                list.add(resultSet.getString("category"));
                 System.out.println(resultSet.getString("category"));
             }
 
@@ -144,14 +138,15 @@ public class ProductCategoryCRUD {
         }
     }
 
-    private void delete() {
+    @Override
+    protected void delete() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM product_category");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                list1.add(resultSet.getString("category"));
+                list.add(resultSet.getString("category"));
                 System.out.println(resultSet.getString("category"));
             }
 

@@ -1,26 +1,35 @@
 package Server.СonnectDB;
 
-import java.io.File;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.InputStream;
 
 public class ReaderDBdata {
     private String url;
     private String name;
     private String password;
 
+    @Override
+    public String toString() {
+        return "ReaderDBdata{" +
+                "url='" + url + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     public ReaderDBdata() {
-        try {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream("database_data.xml")){
+
             // Чтение XML файла
-            File xmlFile = new File("src/main/java/Server/database_data.xml");
+//            File xmlFile = new File("src/main/java/Server/database_data.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(xmlFile);
+            Document doc = dBuilder.parse(is);
 
             doc.getDocumentElement().normalize();
 

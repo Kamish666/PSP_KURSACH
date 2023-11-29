@@ -6,19 +6,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-
-import com.example.client1.controllers.*;
-
 import java.io.*;
+import java.net.Socket;
 
 public class Main extends Application {
 
     public static void main(String[] args) {
         try {
+
+            Client client = new Client("localhost", 2525);
+            client.connect();
+            Integer count = client.receiveInt();
+            System.out.println(count);
+
+            if(true) return;
+
+
             System.out.println("tcp_ip_5.Server connecting...");
             Socket clientSocket = new Socket("127.0.0.1", 2525);
             System.out.println("Connection established...");
@@ -47,11 +50,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/vhod.fxml"));
         loader.load();
-        Parent root = (Parent)loader.getRoot();
+        Parent root = loader.getRoot();
         Scene scene = new Scene(root);
         primaryStage.setTitle("Your Title");
         primaryStage.setScene(scene);
-        Vhod controller = (Vhod)loader.getController();
+        Vhod controller = loader.getController();
         primaryStage.show();
     }
 }
