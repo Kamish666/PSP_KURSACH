@@ -1,5 +1,6 @@
 package Kursach.client;
 
+import Kursach.client.controllers.AbstractController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,8 +20,9 @@ public class SceneManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         current.setRoot(fxmlLoader.getRoot());
+        ((AbstractController)fxmlLoader.getController()).setSceneReference(current);
+
     }
     public static void getPreviousRoot(Scene current) {
         if(!roots.isEmpty()) {
