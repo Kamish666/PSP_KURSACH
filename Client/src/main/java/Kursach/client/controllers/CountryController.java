@@ -26,10 +26,7 @@ public class CountryController extends AbstractController{
     public Text idText;
     public Text nameText;
 
-    @FXML
-    void onClick(String name) {
 
-    }
 
     List<Country> list = new ArrayList<>();
 
@@ -62,11 +59,11 @@ public class CountryController extends AbstractController{
 
     @FXML
     void onClick() {
-        Country selectedCountry = (Country)table.getSelectionModel().getSelectedItem();
+        Country item = (Country)table.getSelectionModel().getSelectedItem();
 
-        if (selectedCountry != null) {
-            idText.setText(String.valueOf(selectedCountry.getId()));
-            nameText.setText(selectedCountry.getCountry());
+        if (item != null) {
+            idText.setText(String.valueOf(item.getId()));
+            nameText.setText(item.getCountry());
         }
     }
 
@@ -74,12 +71,12 @@ public class CountryController extends AbstractController{
         try {
             client.sendInt(11);
             Object result = client.receive();
-            System.out.println(result);
             if (result.getClass().equals(list.getClass())) {
                 return (List<Country>)result;
             }
             else throw new Exception("не ожидал" + result.getClass());
         } catch (Exception e) {
+            System.out.println("ошибка в getList()");
             throw new RuntimeException(e);
         }
 

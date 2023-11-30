@@ -3,7 +3,6 @@ package Kursach.server.CRUD;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ManufacturerCRUD extends AbstractCrud{
+public class ManufacturerCRUD extends AbstractCrud {
     protected final List<String> list = new ArrayList<>();
 
 
@@ -19,6 +18,7 @@ public class ManufacturerCRUD extends AbstractCrud{
 
 
     Scanner scanner;
+
     public ManufacturerCRUD(ObjectInputStream objectIn, ObjectOutputStream objectOut) throws IOException {
         super(objectIn, objectOut);
     }
@@ -73,7 +73,7 @@ public class ManufacturerCRUD extends AbstractCrud{
             ListNameCountry();
             //отпрвка ListNameCountry клиенту
             int countryId;
-            while(true) {
+            while (true) {
                 while (true) {
                     name = scanner.nextLine();
                     if ("окно закрыто".equals(name)) {
@@ -82,7 +82,7 @@ public class ManufacturerCRUD extends AbstractCrud{
                         try {
                             name = scanner.nextLine();
                             country_name = scanner.nextLine();
-                            countryId =  getIdCountry(country_name);
+                            countryId = getIdCountry(country_name);
                             preparedStatement1.setString(1, name);
                             preparedStatement1.setInt(2, countryId);
                             preparedStatement1.execute();
@@ -130,7 +130,7 @@ public class ManufacturerCRUD extends AbstractCrud{
                     try {
                         newManufacturerName = scanner.nextLine();
                         country_name = scanner.nextLine();
-                        countryId =  getIdCountry(country_name);
+                        countryId = getIdCountry(country_name);
                         preparedStatement1.setString(1, newManufacturerName);
                         preparedStatement1.setInt(2, countryId);
                         preparedStatement1.setInt(3, manufacturerId);
@@ -229,7 +229,7 @@ public class ManufacturerCRUD extends AbstractCrud{
     }
 
 
-    private void ListNameCountry() throws SQLException{
+    private void ListNameCountry() throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement("SELECT country_name FROM country");
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
@@ -240,42 +240,4 @@ public class ManufacturerCRUD extends AbstractCrud{
         }
     }
 
-        class Manufacturer {
-            private int id;
-            private String name;
-            private int countryId;
-
-            Manufacturer(int id, String name, int countryId) {
-                this.id = id;
-                this.name = name;
-                this.countryId = countryId;
-            }
-
-            Manufacturer() {
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public int getCountryId() {
-                return countryId;
-            }
-
-            public void setCountryId(int countryId) {
-                this.countryId = countryId;
-            }
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-        }
-    }
+}

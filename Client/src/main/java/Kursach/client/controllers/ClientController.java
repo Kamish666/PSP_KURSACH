@@ -2,7 +2,8 @@ package Kursach.client.controllers;
 
 import Kursach.client.Polzovatel;
 import Kursach.client.SceneManager;
-import Kursach.shared.objects.Provider;
+import Kursach.shared.objects.Client;
+import Kursach.shared.objects.Country;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,34 +16,35 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProviderController extends AbstractController{
+public class ClientController extends AbstractController{
     public Button backButton;
-    public TableView<Provider> table;
-    public TableColumn<Provider, String> column;
+    public TableView<Client> table;
+    public TableColumn<Client, String> column;
     public Button deleteButton;
     public Button editButton;
     public Button addButton;
-    public Text nameText;
     public Text idText;
+    public Text nameText;
     public Text emailText;
-    Polzovatel polzovatel;
 
-    List<Provider> list = new ArrayList<>();
+    List<Client> list = new ArrayList<>();
+
+    Polzovatel polzovatel;
 
     @FXML
     void initialize() {
         polzovatel = Polzovatel.getInstance();
 
         backButton.setOnAction((actionEvent -> {
-            SceneManager.getPreviousRoot(backButton.getScene());
+            SceneManager.getPreviousRoot(scene);
         }));
 
-        list.add(new Provider(69, "Поставщик кала", "kukin@bsuir.by"));
-        list.add(new Provider(534, "Поставщик софта", "vadimsun@gmail.com"));
+        list.add(new Client(1111, "Кукин Дмитрий Петрович", "kukinthebest3333@gmail.com"));
+        list.add(new Client(12321, "Владимир Владмирович", "pubkakapacuk@sobaka.ru"));
 
-        column.setCellValueFactory(category -> new SimpleStringProperty(category.getValue().getName()));
+        column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
 
-        ObservableList<Provider> observableList = FXCollections.observableArrayList(list);
+        ObservableList<Client> observableList = FXCollections.observableArrayList(list);
         table.setItems(observableList);
 
         table.setOnMouseClicked(event -> {
@@ -54,14 +56,12 @@ public class ProviderController extends AbstractController{
 
     @FXML
     void onClick() {
-        Provider item = (Provider) table.getSelectionModel().getSelectedItem();
+        Client item = (Client)table.getSelectionModel().getSelectedItem();
 
         if (item != null) {
             idText.setText(String.valueOf(item.getId()));
             nameText.setText(item.getName());
-            emailText.setText(item.getEmail());
+            emailText.setText(item.getName());
         }
     }
-
-
 }

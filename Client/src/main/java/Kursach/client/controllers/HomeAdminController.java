@@ -3,7 +3,6 @@ package Kursach.client.controllers;
 import Kursach.client.SceneManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -44,7 +43,7 @@ public class HomeAdminController extends AbstractController{
 
 
         clientButton.setOnAction((actionEvent -> {
-            SceneManager.loadScene(scene, "/users-view.fxml");
+            SceneManager.loadScene(scene, "/client-view.fxml");
         }));
         orderButton.setOnAction(actionEvent -> {
             SceneManager.loadScene(scene, "/order-view.fxml");

@@ -10,7 +10,7 @@
 
 
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Kursach.client.controllers.CountryController">
+            fx:controller="Kursach.client.controllers.ClientController">
    <TableView fx:id="table" layoutX="48.0" layoutY="93.0" prefHeight="408.0" prefWidth="260.0"
               AnchorPane.leftAnchor="25.0">
       <columns>
@@ -31,8 +31,7 @@
       </Button>
 
    </AnchorPane>
-   <Button fx:id="deleteButton" disable="true" layoutX="602.0" layoutY="523.0" mnemonicParsing="false" text="Удалить"
-           AnchorPane.bottomAnchor="42.0" AnchorPane.rightAnchor="128.0">
+   <Button fx:id="deleteButton" disable="true" layoutX="602.0" layoutY="523.0" mnemonicParsing="false" text="Удалить">
       <font>
          <Font size="14.0"/>
       </font>
@@ -48,7 +47,7 @@
       </font>
    </Button>
    <AnchorPane layoutX="476.0" layoutY="93.0" prefHeight="408.0" prefWidth="290.0">
-      <Text fx:id="idText" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id"/>
-      <Text fx:id="nameText" layoutX="13.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="название"/>
+      <Text fx:id="idText" layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id"/>
+      <Text fx:id="nameText" layoutX="13.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Страна"/>
    </AnchorPane>
 </AnchorPane>
