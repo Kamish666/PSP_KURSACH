@@ -1,12 +1,15 @@
 package Kursach.server.CRUD;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ProductCategoryCRUD extends AbstractCrud{
     protected final List<String> list = new ArrayList<>();
@@ -14,9 +17,9 @@ public class ProductCategoryCRUD extends AbstractCrud{
 
 
 
-    public ProductCategoryCRUD(Socket clientSocket, int choice) throws IOException {
-        super(clientSocket, choice);
-
+    Scanner scanner;
+    public ProductCategoryCRUD(ObjectInputStream objectIn, ObjectOutputStream objectOut) throws IOException {
+        super(objectIn, objectOut);
     }
 
     @Override

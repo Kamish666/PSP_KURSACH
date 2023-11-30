@@ -1,7 +1,6 @@
 package Kursach.client.controllers;
 
-import Kursach.client.Client;
-import Kursach.client.Main;
+import Kursach.client.Polzovatel;
 import Kursach.client.SceneManager;
 import Kursach.shared.objects.User;
 import javafx.fxml.FXML;
@@ -10,13 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
-import javax.xml.datatype.DatatypeConstants;
-import java.awt.*;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class MainController extends AbstractController{
@@ -35,12 +30,13 @@ public class MainController extends AbstractController{
 
     boolean hasAdmin;
 
-    Client client;
+    Polzovatel client;
 
     public MainController() {
-        client = new Client("localhost", 2525);
+        client = new Polzovatel("localhost", 2525);
         try {
             client.connect();
+            Polzovatel.setInstance(client);
             hasAdmin = client.receiveInt() > 0;
         } catch (IOException e) {
             throw new RuntimeException(e);

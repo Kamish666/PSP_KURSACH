@@ -1,6 +1,8 @@
 package Kursach.server.CRUD;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,11 +19,10 @@ public class OrdersCRUD extends AbstractCrud{
     private List<String> list_product = new ArrayList<>();
     private List<String> list_client = new ArrayList<>();
 
-    private Scanner scanner = new Scanner(System.in);
 
-    public OrdersCRUD(Socket clientSocket, int choice) throws IOException {
-        super(clientSocket, choice);
-
+    Scanner scanner;
+    public OrdersCRUD(ObjectInputStream objectIn, ObjectOutputStream objectOut) throws IOException {
+        super(objectIn, objectOut);
     }
 
     @Override

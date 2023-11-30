@@ -2,13 +2,16 @@ package Kursach.server;
 
 import Kursach.server.ClientHandler.ClientHandler;
 import Kursach.server.СonnectDB.ReaderDBdata;
+import Kursach.shared.objects.Client;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main {
@@ -18,7 +21,9 @@ public class Main {
     public static Connection getConnection() {
         return connection;
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+
+
         System.out.println("Server starting...");
         ServerSocket serverSocket = null;
 
