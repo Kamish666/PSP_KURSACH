@@ -14,13 +14,6 @@ import java.util.Scanner;
 
 public class ManufacturerCRUD extends AbstractCrud {
     protected final List<String> list = new ArrayList<>();
-
-
-    private List<String> list_country = new ArrayList<>();
-
-
-    Scanner scanner;
-
     public ManufacturerCRUD(ObjectInputStream objectIn, ObjectOutputStream objectOut) throws IOException {
         super(objectIn, objectOut);
     }
@@ -28,17 +21,22 @@ public class ManufacturerCRUD extends AbstractCrud {
     protected void select() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM manufacturer");
+            PreparedStatement preparedStatementCountry = connection.prepareStatement("SELECT country_name FROM country WHERE country_id = ?");
 
             ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSetCountry = preparedStatementCountry.executeQuery();
             List<ManufacturerDto> manufacturers = new ArrayList<>();
+
             while (resultSet.next()) {
-                ManufacturerDto manufacturer = new ManufacturerDto(
-                        resultSet.getInt("manufacturer_id"),
-                        resultSet.getString("manufacturer_name"),
-                        getNameCountry(resultSet.getInt("country_id"))
-                );
+                ManufacturerDto manufacturer = new ManufacturerDto();
+                manufacturer.setId(resultSet.getInt("manufacturer_id"));
+                manufacturer.setName(resultSet.getString("manufacturer_name"));
+                manufacturer.setCountryId(resultSet.getInt("country_id"));
+                preparedStatementCountry.setInt(1, resultSet.getInt("country_id"));
+                manufacturer.setCountryName(resultSetCountry.getString("country_name"));
                 manufacturers.add(manufacturer);
             }
+
             System.out.println(manufacturers);
             objectOut.writeObject(manufacturers);
 
@@ -57,7 +55,7 @@ public class ManufacturerCRUD extends AbstractCrud {
             ManufacturerDto manufacturer = (ManufacturerDto) objectIn.readObject();
             try {
                 preparedStatement.setString(1, manufacturer.getName());
-                preparedStatement.setInt(2, getIdCountry(manufacturer.getCountry()));
+                preparedStatement.setInt(2, manufacturer.getCountryId());
                 preparedStatement.execute();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -74,7 +72,7 @@ public class ManufacturerCRUD extends AbstractCrud {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE manufacturer SET manufacturer_name = ?, country_id = ? WHERE manufacturer_id = ?");
             ManufacturerDto manufacturer = (ManufacturerDto) objectIn.readObject();
             preparedStatement.setString(1, manufacturer.getName());
-            preparedStatement.setInt(2, getIdCountry(manufacturer.getCountry()));
+            preparedStatement.setInt(2, manufacturer.getCountryId());
             preparedStatement.setInt(3, manufacturer.getId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -95,34 +93,4 @@ public class ManufacturerCRUD extends AbstractCrud {
             e.printStackTrace();
         }
     }
-
-    private int getIdCountry(String country_name) throws SQLException {
-        int id_country = -1; // Значение по умолчанию или другое подходящее
-
-        try (PreparedStatement statement = connection.prepareStatement("SELECT country_id FROM country WHERE country_name = ?")) {
-            statement.setString(1, country_name);
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-                resultSet.next();
-                id_country = resultSet.getInt("country_id");
-            }
-        }
-        return id_country;
-    }
-
-
-    private String getNameCountry(int country_id) throws SQLException {
-        String country_name = null;
-
-        try (PreparedStatement statement = connection.prepareStatement("SELECT country_name FROM country WHERE country_id = ?")) {
-            statement.setInt(1, country_id);
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-                resultSet.next();
-                country_name = resultSet.getString("country_id");
-            }
-        }
-        return country_name;
-    }
-
 }
