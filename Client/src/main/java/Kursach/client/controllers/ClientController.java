@@ -61,7 +61,7 @@ public class ClientController extends AbstractController{
         if (item != null) {
             idText.setText(String.valueOf(item.getId()));
             nameText.setText(item.getName());
-            emailText.setText(item.getName());
+            emailText.setText(item.getEmail());
         }
     }
 }

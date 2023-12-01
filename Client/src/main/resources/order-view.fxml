@@ -43,7 +43,7 @@
         </font>
     </Button>
     <AnchorPane layoutX="476.0" layoutY="93.0" prefHeight="408.0" prefWidth="290.0">
-        <Text fx:id="idText" layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" />
+        <Text fx:id="idText" layoutX="13.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" />
         <Text fx:id="productTest" layoutX="13.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Продукт" />
         <Text fx:id="clientText" layoutX="13.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Клиент" />
         <Text fx:id="dateText" layoutX="13.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата заказа" />

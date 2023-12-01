@@ -41,7 +41,7 @@
         </font>
     </Button>
     <AnchorPane layoutX="476.0" layoutY="93.0" prefHeight="408.0" prefWidth="290.0">
-        <Text fx:id="idText" layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id"/>
+        <Text fx:id="idText" layoutX="13.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id"/>
         <Text fx:id="nameText" layoutX="13.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Наименование"/>
         <Text fx:id="descText" layoutX="13.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Описание"/>
     </AnchorPane>

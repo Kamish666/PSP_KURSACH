@@ -2,9 +2,7 @@ package Kursach.client.controllers;
 
 import Kursach.client.Polzovatel;
 import Kursach.client.SceneManager;
-import Kursach.shared.objects.Manufacturer;
 import Kursach.shared.objects.ManufacturerDto;
-import Kursach.shared.objects.Provider;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +24,7 @@ public class ManufacturerController extends AbstractController {
     public Button addButton;
     public Text idText;
     public Text nameText;
-    public Text country;
+    public Text countryText;
 
     Polzovatel polzovatel;
 
@@ -57,12 +55,12 @@ public class ManufacturerController extends AbstractController {
 
     @FXML
     void onClick() {
-        ManufacturerDto item = (ManufacturerDto) table.getSelectionModel().getSelectedItem();
+        ManufacturerDto item = table.getSelectionModel().getSelectedItem();
 
         if (item != null) {
             idText.setText(String.valueOf(item.getId()));
             nameText.setText(item.getName());
-            country.setText(item.getCountry());
+            countryText.setText(item.getCountry());
         }
     }
 }

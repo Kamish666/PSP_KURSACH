@@ -41,8 +41,8 @@
         </font>
     </Button>
     <AnchorPane layoutX="476.0" layoutY="93.0" prefHeight="408.0" prefWidth="290.0">
-        <Text fx:id="idText" layoutX="25.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id"/>
-        <Text fx:id="nameText" layoutX="45.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Имя"/>
-        <Text fx:id="emailText" layoutX="65.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Почта"/>
+        <Text fx:id="idText" layoutX="13.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id"/>
+        <Text fx:id="nameText" layoutX="13.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Имя"/>
+        <Text fx:id="emailText" layoutX="13.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Почта"/>
     </AnchorPane>
 </AnchorPane>
