@@ -17,9 +17,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        URL url = Main.class.getResource("/Main.fxml");
+        URL url = Main.class.getResource("/main-view.fxml");
         System.out.println(url);
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/Main.fxml"));
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/main-view.fxml"));
 //        Parent root = loader.load();
 //        Scene scene = new Scene(root);
 //        primaryStage.setTitle("Your Title");

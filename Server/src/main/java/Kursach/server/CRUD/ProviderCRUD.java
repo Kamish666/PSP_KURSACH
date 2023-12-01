@@ -1,21 +1,24 @@
 package Kursach.server.CRUD;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ProviderCRUD extends AbstractCrud{
 
     private List<String> list = new ArrayList<>();
 
 
-    public ProviderCRUD(Socket clientSocket, int choice) throws IOException {
-        super(clientSocket, choice);
-
+    Scanner scanner;
+    public ProviderCRUD(ObjectInputStream objectIn, ObjectOutputStream objectOut) throws IOException {
+        super(objectIn, objectOut);
     }
 
     //функция
@@ -229,42 +232,5 @@ public class ProviderCRUD extends AbstractCrud{
         }
     }
 
-    class Provider {
-        private int id;
-        private String name;
-        private String email;
-
-        Provider(int id, String name, String email){
-            this.id = id;
-            this.name = name;
-            this.email = email;
-        }
-
-        Provider(){}
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-    }
 }
 

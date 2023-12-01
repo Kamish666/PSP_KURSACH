@@ -3,13 +3,19 @@ package Kursach.client;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 
-public class Client {
+public class Polzovatel {
 
-    private static Client instance;
+    private static Polzovatel instance;
+
+    public static void setInstance(Polzovatel client) {
+        instance = client;
+    }
+    public static Polzovatel getInstance() {
+        return instance;
+    }
+
     private int port;
     private String host;
     private Socket socket;
@@ -18,7 +24,7 @@ public class Client {
 
     private ObjectOutputStream objectOut;
 
-    public Client(String host, int port) {
+    public Polzovatel(String host, int port) {
         this.port = port;
         this.host = host;
     }
@@ -51,6 +57,7 @@ public class Client {
 
     public Object receive() {
         try {
+            System.out.println("receiving");
             Object object = objectIn.readObject();
             System.out.println("Received: " + object);
             return object;

@@ -1,12 +1,15 @@
 package Kursach.server.CRUD;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ProductCategoryCRUD extends AbstractCrud{
     protected final List<String> list = new ArrayList<>();
@@ -14,9 +17,9 @@ public class ProductCategoryCRUD extends AbstractCrud{
 
 
 
-    public ProductCategoryCRUD(Socket clientSocket, int choice) throws IOException {
-        super(clientSocket, choice);
-
+    Scanner scanner;
+    public ProductCategoryCRUD(ObjectInputStream objectIn, ObjectOutputStream objectOut) throws IOException {
+        super(objectIn, objectOut);
     }
 
     @Override
@@ -182,44 +185,6 @@ public class ProductCategoryCRUD extends AbstractCrud{
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    class ProductCategory {
-        private int id;
-        private String category;
-        private String definition;
-
-        ProductCategory(int id, String category, String definition){
-            this.id = id;
-            this.category = category;
-            this.definition = definition;
-        }
-
-        ProductCategory(){}
-
-        public String getCategory() {
-            return category;
-        }
-
-        public void setCategory(String category) {
-            this.category = category;
-        }
-
-        public String getDefinition() {
-            return definition;
-        }
-
-        public void setDefinition(String definition) {
-            this.definition = definition;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
         }
     }
 }

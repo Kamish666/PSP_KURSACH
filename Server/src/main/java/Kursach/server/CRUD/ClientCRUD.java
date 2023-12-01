@@ -1,20 +1,27 @@
 package Kursach.server.CRUD;
 
+import Kursach.shared.objects.Client;
+
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ClientCRUD extends AbstractCrud {
 
     protected final List<String> list = new ArrayList<>();
+    Scanner scanner; //удалить
 
     int choice;
-    public ClientCRUD(Socket clientSocket, int choice) throws IOException {
-        super(clientSocket, choice);
+
+    public ClientCRUD(ObjectInputStream objectIn, ObjectOutputStream objectOut) throws IOException {
+        super(objectIn, objectOut);
     }
 
     @Override
@@ -24,31 +31,20 @@ public class ClientCRUD extends AbstractCrud {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            List<Client> clients = new ArrayList<>();
             while (resultSet.next()) {
-                list.add(resultSet.getString("name"));
-                System.out.println(resultSet.getString("name"));
+                Client client = new Client(
+                        resultSet.getInt("client_id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("email")
+                );
+                clients.add(client);
             }
+            objectOut.writeObject(clients);
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM client WHERE name = ?");
-            while (true) {
-                String clientName = scanner.nextLine();
-
-                if ("окно закрыто".equals(clientName)) {
-                    break;
-                } else {
-                    preparedStatement.setString(1, clientName);
-                    resultSet = preparedStatement.executeQuery();
-                    resultSet.next();
-                    int clientId = resultSet.getInt("client_id");
-                    String email = resultSet.getString("email");
-                    System.out.println(clientId);
-                    System.out.println(clientName);
-                    System.out.println(email);
-                }
-            }
             resultSet.close();
             preparedStatement.close();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -182,45 +178,6 @@ public class ClientCRUD extends AbstractCrud {
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    class Client {
-        private int id;
-        private String name;
-        private String email;
-
-        Client(int id, String name, String email) {
-            this.id = id;
-            this.name = name;
-            this.email = email;
-        }
-
-        Client() {
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
         }
     }
 }

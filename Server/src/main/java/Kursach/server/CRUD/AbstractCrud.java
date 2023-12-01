@@ -2,20 +2,16 @@ package Kursach.server.CRUD;
 
 import Kursach.server.Main;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.sql.Connection;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public abstract class AbstractCrud {
     protected final Connection connection;
 
-    protected final int choice;
-    protected final Scanner scanner;
-    protected final PrintWriter writer;
     protected final ObjectInputStream objectIn;
     protected final ObjectOutputStream objectOut;
 
@@ -28,7 +24,8 @@ public abstract class AbstractCrud {
 
     protected abstract void delete();
 
-    public void execute() {
+    public void execute(int choice) {
+        System.out.println("executing method" + choice);
         switch (choice) {
             case 1 -> select();
             case 2 -> insert();
@@ -39,13 +36,10 @@ public abstract class AbstractCrud {
         }
     }
 
-    AbstractCrud(Socket clientSocket, int choice) throws IOException {
-        this.choice = choice;
+    AbstractCrud(ObjectInputStream objectIn, ObjectOutputStream objectOut) throws IOException {
         connection = Main.getConnection();
-        scanner = new Scanner(clientSocket.getInputStream());
-        writer = new PrintWriter(clientSocket.getOutputStream());
-        objectIn = new ObjectInputStream(clientSocket.getInputStream());
-        objectOut = new ObjectOutputStream(clientSocket.getOutputStream());
+        this.objectIn = objectIn;
+        this.objectOut = objectOut;
 
     }
 }

@@ -1,12 +1,15 @@
 package Kursach.server.CRUD;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ProductCRUD extends AbstractCrud {
 
@@ -16,9 +19,9 @@ public class ProductCRUD extends AbstractCrud {
     private List<String> list_provider = new ArrayList<>();
 
 
-    public ProductCRUD(Socket clientSocket, int choice) throws IOException {
-        super(clientSocket, choice);
-
+    Scanner scanner;
+    public ProductCRUD(ObjectInputStream objectIn, ObjectOutputStream objectOut) throws IOException {
+        super(objectIn, objectOut);
     }
 
     @Override
@@ -374,75 +377,6 @@ public class ProductCRUD extends AbstractCrud {
                 list_provider.add(providerName);
                 System.out.println(providerName);
             }
-        }
-    }
-
-    class Product {
-        private int id;
-        private String name;
-        private double price;
-        private int categoryId;
-        private int manufacturerId;
-        private int providerId;
-
-        Product(int id, String name, double price, int categoryId, int manufacturerId, int providerId) {
-            this.id = id;
-            this.name = name;
-            this.price = price;
-            this.categoryId = categoryId;
-            this.manufacturerId = manufacturerId;
-            this.providerId = providerId;
-        }
-
-        Product() {
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public double getPrice() {
-            return price;
-        }
-
-        public void setPrice(double price) {
-            this.price = price;
-        }
-
-        public int getCategoryId() {
-            return categoryId;
-        }
-
-        public void setCategoryId(int categoryId) {
-            this.categoryId = categoryId;
-        }
-
-        public int getManufacturerId() {
-            return manufacturerId;
-        }
-
-        public void setManufacturerId(int manufacturerId) {
-            this.manufacturerId = manufacturerId;
-        }
-
-        public int getProviderId() {
-            return providerId;
-        }
-
-        public void setProviderId(int providerId) {
-            this.providerId = providerId;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.providerId = providerId;
         }
     }
 }

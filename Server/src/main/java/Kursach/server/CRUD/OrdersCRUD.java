@@ -1,6 +1,8 @@
 package Kursach.server.CRUD;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,11 +19,10 @@ public class OrdersCRUD extends AbstractCrud{
     private List<String> list_product = new ArrayList<>();
     private List<String> list_client = new ArrayList<>();
 
-    private Scanner scanner = new Scanner(System.in);
 
-    public OrdersCRUD(Socket clientSocket, int choice) throws IOException {
-        super(clientSocket, choice);
-
+    Scanner scanner;
+    public OrdersCRUD(ObjectInputStream objectIn, ObjectOutputStream objectOut) throws IOException {
+        super(objectIn, objectOut);
     }
 
     @Override
@@ -368,55 +369,6 @@ public class OrdersCRUD extends AbstractCrud{
                 list_client.add(clientName);
                 System.out.println(clientName);
             }
-        }
-    }
-
-    class Order {
-        private int id;
-        private String orderNumber;
-        private int productId;
-        private int clientId;
-
-        Order(int id, String orderNumber, int productId, int clientId) {
-            this.id = id;
-            this.orderNumber = orderNumber;
-            this.productId = productId;
-            this.clientId = clientId;
-        }
-
-        Order() {
-        }
-
-        public String getOrderNumber() {
-            return orderNumber;
-        }
-
-        public void setOrderNumber(String orderNumber) {
-            this.orderNumber = orderNumber;
-        }
-
-        public int getProductId() {
-            return productId;
-        }
-
-        public void setProductId(int productId) {
-            this.productId = productId;
-        }
-
-        public int getClientId() {
-            return clientId;
-        }
-
-        public void setClientId(int clientId) {
-            this.clientId = clientId;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
         }
     }
 }

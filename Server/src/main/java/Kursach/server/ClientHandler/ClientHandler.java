@@ -13,6 +13,14 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ClientHandler implements Runnable {
+    private final ProductCategoryCRUD productCategoryCrud;
+    private final ClientCRUD clientCrud;
+    private final UserCRUD userCrud;
+    private final ManufacturerCRUD manufacturerCrud;
+    private final ProductCRUD productCrud;
+    private final OrdersCRUD ordersCrud;
+    private  CountryCRUD countryCrud;
+    private  ProviderCRUD providerCrud;
     private Scanner scanner;
     private PrintWriter writer;
     private Socket clientSocket;
@@ -29,6 +37,15 @@ public class ClientHandler implements Runnable {
         objectIn = new ObjectInputStream(clientSocket.getInputStream());
         objectOut = new ObjectOutputStream(clientSocket.getOutputStream());
         System.out.println("Обменялись стримами");
+
+        countryCrud = new CountryCRUD(objectIn, objectOut);
+        providerCrud = new ProviderCRUD(objectIn, objectOut);
+        productCategoryCrud = new ProductCategoryCRUD(objectIn, objectOut);
+        clientCrud = new ClientCRUD(objectIn, objectOut);
+        userCrud = new UserCRUD(objectIn, objectOut);
+        manufacturerCrud = new ManufacturerCRUD(objectIn, objectOut);
+        productCrud = new ProductCRUD(objectIn, objectOut);
+        ordersCrud = new OrdersCRUD(objectIn, objectOut);
 
     }
 
@@ -57,7 +74,6 @@ public class ClientHandler implements Runnable {
             preparedStatement.setString(1, login);//login
             preparedStatement.setString(2, password);//password
             ResultSet resultSet = preparedStatement.executeQuery();
-            System.out.println(resultSet);
             if (resultSet.next()) {
                 id = resultSet.getInt("user_id");
                 role = resultSet.getInt("role");
@@ -117,20 +133,21 @@ public class ClientHandler implements Runnable {
         // прием данных
         int crudType = choice / 10;
         int crudMethod = choice % 10;
+        System.out.println("Method: " + crudType + ", " + crudMethod);
         AbstractCrud crud = switch (crudType) {
-            case 1 -> new CountryCRUD(clientSocket, crudMethod);
-            case 2 -> new ProviderCRUD(clientSocket, crudMethod);
-            case 3 -> new ProductCategoryCRUD(clientSocket, crudMethod);
-            case 4 -> new ClientCRUD(clientSocket, crudMethod);
-            case 5 -> new UserCRUD(clientSocket, crudMethod, id);
-            case 6 -> new ManufacturerCRUD(clientSocket, crudMethod);
-            case 7 -> new ProductCRUD(clientSocket, crudMethod);
-            case 8 -> new OrdersCRUD(clientSocket, crudMethod);
+            case 1 -> countryCrud;
+            case 2 -> providerCrud;
+            case 3 -> productCategoryCrud;
+            case 4 -> clientCrud;
+            case 5 -> userCrud;
+            case 6 -> manufacturerCrud;
+            case 7 -> productCrud;
+            case 8 -> ordersCrud;
             default -> {
                 throw new RuntimeException("Как же круто что число выбирает операции, а не енам, но мне впадлу енам делать уже, поэтому страдай исключением");
             }
         };
-        crud.execute();
+        crud.execute(crudMethod);
     }
 
     @Override
@@ -143,7 +160,7 @@ public class ClientHandler implements Runnable {
             throw new RuntimeException(e);
         }
 
-        try (ObjectInputStream objectIn = new ObjectInputStream(clientSocket.getInputStream())) {
+        try {
             while (true) {
                 Integer choice = (Integer) objectIn.readObject();
                 performOperation(choice);
