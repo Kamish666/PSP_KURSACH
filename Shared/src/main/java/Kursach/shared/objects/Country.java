@@ -1,6 +1,8 @@
 package Kursach.shared.objects;
 
-public class Country {
+import java.io.Serializable;
+
+public class Country implements Serializable {
     private int id;
     private String country;
 

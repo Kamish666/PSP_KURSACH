@@ -25,7 +25,7 @@ public class ReaderDBdata {
     public ReaderDBdata() {
         try (InputStream is = getClass().getClassLoader().getResourceAsStream("database_data.xml")){
 
-            // Чтение XML файла
+
 //            File xmlFile = new File("src/main/java/Server/database_data.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
