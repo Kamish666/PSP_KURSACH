@@ -1,0 +1,14 @@
+Kursach\client\controllers\admin\CategoryController.class
+Kursach\client\controllers\admin\ClientController.class
+Kursach\client\controllers\admin\CountryController.class
+Kursach\client\controllers\ICrudController.class
+Kursach\client\controllers\MainController.class
+Kursach\client\controllers\admin\ProductController.class
+Kursach\client\controllers\HomeAdminController.class
+Kursach\client\controllers\admin\ProviderController.class
+Kursach\client\Main.class
+Kursach\client\controllers\AbstractController.class
+Kursach\client\Polzovatel.class
+Kursach\client\controllers\OrderController.class
+Kursach\client\SceneManager.class
+Kursach\client\controllers\admin\ManufacturerController.class

@@ -1,0 +1,11 @@
+Kursach\shared\objects\ManufacturerDto.class
+Kursach\shared\objects\Order.class
+Kursach\shared\objects\Provider.class
+Kursach\shared\objects\ProductDto.class
+Kursach\shared\objects\Manufacturer.class
+Kursach\shared\objects\OrderDto.class
+Kursach\shared\objects\ProductCategory.class
+Kursach\shared\objects\Product.class
+Kursach\shared\objects\Client.class
+Kursach\shared\objects\User.class
+Kursach\shared\objects\Country.class

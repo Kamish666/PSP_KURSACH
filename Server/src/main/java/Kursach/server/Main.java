@@ -1,7 +1,7 @@
 package Kursach.server;
 
 import Kursach.server.ClientHandler.ClientHandler;
-import Kursach.server.СonnectDB.ReaderDBdata;
+import Kursach.server.ConnectDB.ReaderDBdata;
 import Kursach.shared.objects.Client;
 
 import java.io.*;
