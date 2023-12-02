@@ -38,4 +38,9 @@ public class Provider implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
