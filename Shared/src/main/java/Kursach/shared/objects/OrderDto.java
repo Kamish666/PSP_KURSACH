@@ -1,8 +1,9 @@
 package Kursach.shared.objects;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class OrderDto {
+public class OrderDto implements Serializable {
     private int id;
     private Product product;
     private Client client;
@@ -90,5 +91,10 @@ public class OrderDto {
 
     public void setClientName (String name){
         client.setName(name);
+    }
+
+    @Override
+    public String toString() {
+        return getProductName();
     }
 }

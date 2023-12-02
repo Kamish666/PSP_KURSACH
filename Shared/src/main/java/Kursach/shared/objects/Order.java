@@ -1,14 +1,15 @@
 package Kursach.shared.objects;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Order {
+public class Order implements Serializable {
     private int id;
     private int productId;
     private int clientId;
     LocalDateTime dateTime;
-    private int ammount;
+    private int amount;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     public static String dateToString(LocalDateTime dateTime) {
@@ -33,12 +34,12 @@ public class Order {
         this.dateTime = dateTime;
     }
 
-    public int getAmmount() {
-        return ammount;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setAmmount(int ammount) {
-        this.ammount = ammount;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public Order(int id, int productId, int clientId, LocalDateTime dateTime, int ammount) {
@@ -46,7 +47,7 @@ public class Order {
         this.productId = productId;
         this.clientId = clientId;
         this.dateTime = dateTime;
-        this.ammount = ammount;
+        this.amount = ammount;
     }
 
     public int getProductId() {

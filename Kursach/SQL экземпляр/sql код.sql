@@ -44,11 +44,12 @@ CREATE TABLE orders (
     orders_id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT,
     client_id INT,
-    date DATE,
+    date DATETIME,
     amount INT,
     FOREIGN KEY (product_id) REFERENCES product(product_id),
     FOREIGN KEY (client_id) REFERENCES client(client_id)
 );
+
 
 CREATE TABLE user (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -57,3 +58,4 @@ CREATE TABLE user (
     password VARCHAR(45),
     role INT
 );
+

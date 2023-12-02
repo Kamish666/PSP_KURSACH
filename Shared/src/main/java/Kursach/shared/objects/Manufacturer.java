@@ -1,6 +1,8 @@
 package Kursach.shared.objects;
 
-public class Manufacturer {
+import java.io.Serializable;
+
+public class Manufacturer implements Serializable {
     private int id;
     private String name;
     private int countryId;

@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,8 +32,8 @@ public class OrdersCRUD extends AbstractCrud{
     protected void select() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM orders");
-            PreparedStatement preparedStatementProduct = connection.prepareStatement("SELECT name FROM product WHERE product_id = ?");
-            PreparedStatement preparedStatementClient = connection.prepareStatement("SELECT name FROM client WHERE client_id = ?");
+            PreparedStatement preparedStatementProduct = connection.prepareStatement("SELECT * FROM product WHERE product_id = ?");
+            PreparedStatement preparedStatementClient = connection.prepareStatement("SELECT * FROM client WHERE client_id = ?");
 
             ResultSet resultSet = preparedStatement.executeQuery();
             List<OrderDto> orders = new ArrayList<>();
@@ -59,7 +60,7 @@ public class OrdersCRUD extends AbstractCrud{
                 order.setProduct(product);
                 resultSetProduct.close();
 
-                preparedStatementProduct.setInt(1, resultSet.getInt("client_id"));
+                preparedStatementClient.setInt(1, resultSet.getInt("client_id"));
                 ResultSet resultSetClient = preparedStatementClient.executeQuery();
                 resultSetClient.next();
                 Client client = new Client(
@@ -89,10 +90,12 @@ public class OrdersCRUD extends AbstractCrud{
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO orders (product_id, client_id, date, amount) VALUES (?, ?, ?, ?)");
             OrderDto order = (OrderDto) objectIn.readObject();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = order.getDateTime().format(formatter);
             try {
                 preparedStatement.setInt(1, order.getProductId());
                 preparedStatement.setInt(2, order.getClientId());
-                preparedStatement.setTimestamp(3, Timestamp.valueOf(order.getDateTime()));
+                preparedStatement.setTimestamp(3, Timestamp.valueOf(formattedDateTime));
                 preparedStatement.setInt(4, order.getAmount());
                 preparedStatement.execute();
             } catch (SQLException e) {

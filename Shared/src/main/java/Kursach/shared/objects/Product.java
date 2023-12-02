@@ -1,6 +1,8 @@
 package Kursach.shared.objects;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
         private int id;
         private String name;
         private double price;
@@ -20,7 +22,16 @@ public class Product {
         public Product() {
         }
 
-        public String getName() {
+    public Product(ProductDto productDto) {
+        this.id = productDto.getId();
+        this.name = productDto.getName();
+        this.price = productDto.getPrice();
+        this.categoryId = productDto.getCategoryId();
+        this.manufacturerId = productDto.getManufacturerId();
+        this.providerId = productDto.getProviderId();
+    }
+
+    public String getName() {
             return name;
         }
 
@@ -67,4 +78,9 @@ public class Product {
         public void setId(int id) {
             this.providerId = providerId;
         }
+
+    @Override
+    public String toString() {
+        return getName();
     }
+}

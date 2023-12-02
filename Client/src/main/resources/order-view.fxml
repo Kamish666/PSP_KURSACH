@@ -8,10 +8,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kursach.client.controllers.OrderController">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kursach.client.controllers.admin.OrderController">
     <TableView fx:id="table" layoutX="48.0" layoutY="93.0" prefHeight="408.0" prefWidth="260.0" AnchorPane.leftAnchor="25.0">
         <columns>
-            <TableColumn fx:id="column" prefWidth="274.0" text="Название" />
+            <TableColumn fx:id="column" prefWidth="274.0" text="Номер заказа"/>
         </columns>
     </TableView>
     <Label layoutX="323.0" layoutY="14.0" text="Заказы" AnchorPane.topAnchor="14.0">
@@ -44,9 +44,9 @@
     </Button>
     <AnchorPane layoutX="476.0" layoutY="93.0" prefHeight="408.0" prefWidth="290.0">
         <Text fx:id="idText" layoutX="13.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" />
-        <Text fx:id="productTest" layoutX="13.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Продукт" />
-        <Text fx:id="clientText" layoutX="13.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Клиент" />
-        <Text fx:id="dateText" layoutX="13.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата заказа" />
+        <Text fx:id="productNameText" layoutX="13.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Продукт" />
+        <Text fx:id="clientNameText" layoutX="13.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Клиент" />
+        <Text fx:id="dateTimeText" layoutX="13.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата заказа" />
         <Text fx:id="amountText" layoutX="11.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Количество" />
     </AnchorPane>
 </AnchorPane>
