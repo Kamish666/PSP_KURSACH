@@ -1,5 +1,9 @@
 package Kursach.shared.objects;
 
+
+
+
+
 public class ManufacturerDto {
     private int id;
     private String name;

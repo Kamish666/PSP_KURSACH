@@ -47,13 +47,6 @@ public class Polzovatel {
         }
     }
 
-    public void sendInt(int num) throws IOException {
-        send(num);
-    }
-
-    public int receiveInt() {
-        return (Integer) receive();
-    }
 
     public Object receive() {
         try {

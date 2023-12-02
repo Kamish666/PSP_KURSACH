@@ -3,9 +3,7 @@ package Kursach.client.controllers;
 import Kursach.client.Polzovatel;
 import Kursach.client.SceneManager;
 import Kursach.shared.objects.ProductDto;
-import Kursach.shared.objects.Provider;
-import com.sun.javafx.menu.MenuItemBase;
-import javafx.application.Platform;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,8 +44,6 @@ public class ProductController extends AbstractController{
             SceneManager.getPreviousRoot(backButton.getScene());
         }));
 
-        list.add(new ProductDto(234, "Ведьмак 3: Дикая Охота", 69.99, "Игры", "CD Project Red", "Steam"));
-        list.add(new ProductDto(123, "Starfield", 12321, "Мусор", "Bethesda Game Studios", "Xbox"));
 
         column.setCellValueFactory(category -> new SimpleStringProperty(category.getValue().getName()));
 
@@ -69,9 +65,6 @@ public class ProductController extends AbstractController{
             idText.setText(String.valueOf(item.getId()));
             nameText.setText(item.getName());
             priceText.setText(String.valueOf(item.getPrice()));
-            categoryText.setText(item.getCategory());
-            manufacturerText.setText(item.getManufacturer());
-            providerText.setText(item.getProvider());
         }
     }
 }

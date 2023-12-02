@@ -1,6 +1,8 @@
 package Kursach.shared.objects;
 
-public class Provider {
+import java.io.Serializable;
+
+public class Provider implements Serializable {
     private int id;
     private String name;
     private String email;

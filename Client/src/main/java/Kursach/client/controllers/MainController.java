@@ -37,7 +37,7 @@ public class MainController extends AbstractController{
         try {
             client.connect();
             Polzovatel.setInstance(client);
-            hasAdmin = client.receiveInt() > 0;
+            hasAdmin = (Integer) client.receive() > 0;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
