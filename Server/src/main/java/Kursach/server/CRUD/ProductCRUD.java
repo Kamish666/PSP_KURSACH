@@ -1,6 +1,6 @@
 package Kursach.server.CRUD;
 
-import Kursach.shared.objects.ProductDto;
+import Kursach.shared.objects.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,13 +22,10 @@ public class ProductCRUD extends AbstractCrud {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM product");
             PreparedStatement preparedStatementManufacturer = connection.prepareStatement("SELECT * FROM manufacturer WHERE manufacturer_id = ?");
-            PreparedStatement preparedStatementCategory = connection.prepareStatement("SELECT * FROM product_catugory WHERE product_category_id = ?");
+            PreparedStatement preparedStatementCategory = connection.prepareStatement("SELECT * FROM product_category WHERE product_category_id = ?");
             PreparedStatement preparedStatementProvider = connection.prepareStatement("SELECT * FROM provider WHERE provider_id = ?");
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            ResultSet resultSetManufacturer = preparedStatementManufacturer.executeQuery();
-            ResultSet resultSetCategory = preparedStatementCategory.executeQuery();
-            ResultSet resultSetProvider = preparedStatementProvider.executeQuery();
             List<ProductDto> products = new ArrayList<>();
 
             while (resultSet.next()) {
@@ -37,20 +34,38 @@ public class ProductCRUD extends AbstractCrud {
                 product.setName(resultSet.getString("name"));
                 product.setPrice(resultSet.getInt("price"));
 
-                product.setManufacturerId(resultSet.getInt("manufacturer_id"));
                 preparedStatementManufacturer.setInt(1, resultSet.getInt("manufacturer_id"));
-                product.setManufacturerName(resultSetManufacturer.getString("manufacturer_name"));
-                product.setManufacturerCountryId(resultSetManufacturer.getInt("country_id"));
+                ResultSet resultSetManufacturer = preparedStatementManufacturer.executeQuery();
+                resultSetManufacturer.next();
+                Manufacturer manufacturer = new Manufacturer(
+                        resultSetManufacturer.getInt("manufacturer_id"),
+                        resultSetManufacturer.getString("manufacturer_name"),
+                        resultSetManufacturer.getInt("country_id")
+                );
+                product.setManufacturer(manufacturer);
+                resultSetManufacturer.close();
 
-                product.setCategoryId(resultSet.getInt("product_category_id"));
-                preparedStatementCategory.setInt(1, resultSet.getInt("product_category_id"));
-                product.setCategoryName(resultSetCategory.getString("category"));
-                product.setCategoryDifinition(resultSetCategory.getString("definition"));
+                preparedStatementCategory.setInt(1, resultSet.getInt("category_id"));
+                ResultSet resultSetCategory = preparedStatementCategory.executeQuery();
+                resultSetCategory.next();
+                ProductCategory category = new ProductCategory(
+                        resultSetCategory.getInt("product_category_id"),
+                        resultSetCategory.getString("category"),
+                        resultSetCategory.getString("definition")
+                );
+                product.setCategory(category);
+                resultSetCategory.close();
 
-                product.setProviderId(resultSet.getInt("provider_id"));
                 preparedStatementProvider.setInt(1, resultSet.getInt("provider_id"));
-                product.setProviderName(resultSetProvider.getString("name"));
-                product.setProviderEmail(resultSetProvider.getString("email"));
+                ResultSet resultSetProvider = preparedStatementProvider.executeQuery();
+                resultSetProvider.next();
+                Provider provider = new Provider(
+                        resultSetProvider.getInt("provider_id"),
+                        resultSetProvider.getString("name"),
+                        resultSetProvider.getString("email")
+                );
+                product.setProvider(provider);
+                resultSetProvider.close();
 
                 products.add(product);
             }

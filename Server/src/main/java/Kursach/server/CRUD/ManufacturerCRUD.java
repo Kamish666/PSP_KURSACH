@@ -1,6 +1,7 @@
 package Kursach.server.CRUD;
 
 import Kursach.shared.objects.ManufacturerDto;
+import Kursach.shared.objects.Country;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,26 +22,33 @@ public class ManufacturerCRUD extends AbstractCrud {
     protected void select() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM manufacturer");
-            PreparedStatement preparedStatementCountry = connection.prepareStatement("SELECT country_name FROM country WHERE country_id = ?");
+            PreparedStatement preparedStatementCountry = connection.prepareStatement("SELECT * FROM country WHERE country_id = ?");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             List<ManufacturerDto> manufacturers = new ArrayList<>();
 
+
             while (resultSet.next()) {
                 ManufacturerDto manufacturer = new ManufacturerDto();
                 manufacturer.setId(resultSet.getInt("manufacturer_id"));
                 manufacturer.setName(resultSet.getString("manufacturer_name"));
-                manufacturer.setCountryId(resultSet.getInt("country_id"));
-                ResultSet resultSetCountry = preparedStatementCountry.executeQuery();
+
                 preparedStatementCountry.setInt(1, resultSet.getInt("country_id"));
-                manufacturer.setCountryName(resultSetCountry.getString("country_name"));
+                ResultSet resultSetCountry = preparedStatementCountry.executeQuery();
+                resultSetCountry.next();
+                Country country = new Country(
+                        resultSetCountry.getInt("country_id"),
+                        resultSetCountry.getString("country_name")
+                );
+                manufacturer.setCountry(country);
+                resultSetCountry.close();
+                manufacturer.setCountry(country);
                 manufacturers.add(manufacturer);
             }
 
             System.out.println(manufacturers);
             objectOut.writeObject(manufacturers);
-
 
             resultSet.close();
             preparedStatement.close();
