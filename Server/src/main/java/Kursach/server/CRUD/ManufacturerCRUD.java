@@ -43,7 +43,6 @@ public class ManufacturerCRUD extends AbstractCrud {
                 );
                 manufacturer.setCountry(country);
                 resultSetCountry.close();
-                manufacturer.setCountry(country);
                 manufacturers.add(manufacturer);
             }
 

@@ -1,6 +1,6 @@
 package Kursach.server.CRUD;
 
-import Kursach.shared.objects.OrderDto;
+import Kursach.shared.objects.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -35,8 +35,6 @@ public class OrdersCRUD extends AbstractCrud{
             PreparedStatement preparedStatementClient = connection.prepareStatement("SELECT name FROM client WHERE client_id = ?");
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            ResultSet resultSetProduct = preparedStatementProduct.executeQuery();
-            ResultSet resultSetClient = preparedStatementClient.executeQuery();
             List<OrderDto> orders = new ArrayList<>();
 
             while (resultSet.next()) {
@@ -46,13 +44,31 @@ public class OrdersCRUD extends AbstractCrud{
                 order.setDateTime(timestamp.toLocalDateTime());
                 order.setAmount(resultSet.getInt("amount"));
 
-                order.setProductId(resultSet.getInt("product_id"));
                 preparedStatementProduct.setInt(1, resultSet.getInt("product_id"));
-                order.setProductName(resultSetProduct.getString("name"));
+                ResultSet resultSetProduct = preparedStatementProduct.executeQuery();
+                resultSetProduct.next();
+                Product product = new Product(
+                        resultSetProduct.getInt("product_id"),
+                        resultSetProduct.getString("name"),
+                        resultSetProduct.getDouble("price"),
+                        resultSetProduct.getInt("category_id"),
+                        resultSetProduct.getInt("manufacturer_id"),
+                        resultSetProduct.getInt("provider_id")
 
-                order.setClientId(resultSet.getInt("client_id"));
-                preparedStatementClient.setInt(1, resultSet.getInt("client_id"));
-                order.setClientName(resultSetClient.getString("name"));
+                );
+                order.setProduct(product);
+                resultSetProduct.close();
+
+                preparedStatementProduct.setInt(1, resultSet.getInt("client_id"));
+                ResultSet resultSetClient = preparedStatementClient.executeQuery();
+                resultSetClient.next();
+                Client client = new Client(
+                        resultSetClient.getInt("client_id"),
+                        resultSetClient.getString("name"),
+                        resultSetClient.getString("email")
+                );
+                order.setClient(client);
+                resultSetClient.close();
 
                 orders.add(order);
             }
