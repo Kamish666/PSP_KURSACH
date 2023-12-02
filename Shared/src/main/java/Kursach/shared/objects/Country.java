@@ -10,7 +10,7 @@ public class Country implements Serializable {
         this.id=id;
         this.country=country;
     }
-    Country(){}
+    public Country() {}
 
     public String getCountry() {
         return country;

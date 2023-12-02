@@ -4,9 +4,12 @@ public class ProductDto {
     private int id;
     private String name;
     private double price;
-    private String category;
-    private String manufacturer;
-    private String provider;
+    private ProductCategory category;
+    private Manufacturer manufacturer;
+    private Provider provider;
+
+    public ProductDto() {
+    }
 
     public int getId() {
         return id;
@@ -32,39 +35,74 @@ public class ProductDto {
         this.price = price;
     }
 
-    public String getCategory() {
-        return category;
+    public int getCategoryId() {
+        return category.getId();
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryId(int id) {
+        category.setId(id);
     }
 
-    public String getManufacturer() {
-        return manufacturer;
+    public String getCategoryName() {
+        return category.getCategory();
     }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
+    public void setCategoryName(String name) {
+        category.setCategory(name);
     }
 
-    public String getProvider() {
-        return provider;
+    public String getCategoryDifinition() {
+        return category.getDefinition();
     }
 
-    public void setProvider(String provider) {
-        this.provider = provider;
+    public void setCategoryDifinition(String difinition) {
+        category.setDefinition(difinition);
     }
 
-    public ProductDto(int id, String name, double price, String category, String manufacturer, String provider) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.category = category;
-        this.manufacturer = manufacturer;
-        this.provider = provider;
+    public int getManufacturerId() {
+        return manufacturer.getId();
     }
 
-    public ProductDto() {
+    public void setManufacturerId(int id) {
+        manufacturer.setId(id);
     }
+
+    public String getManufacturerName() {
+        return manufacturer.getName();
+    }
+
+    public void setManufacturerName(String name) {
+        manufacturer.setName(name);
+    }
+
+    public int getManufacturerCountryId() {
+        return manufacturer.getCountryId();
+    }
+
+    public void setManufacturerCountryId(int countryId) {
+        manufacturer.setCountryId(countryId);
+    }
+
+    public int getProviderId() {
+        return provider.getId();
+    }
+
+    public void setProviderId(int id) {
+        provider.setId(id);
+    }
+
+    public String getProviderName() {
+        return provider.getName();
+    }
+
+    public void setProviderName(String name) { provider.setName(name); }
+
+    public String getProviderEmail() {
+        return provider.getEmail();
+    }
+
+    public void setProviderEmail(String email) {
+        provider.setEmail(email);
+    }
+
 }
