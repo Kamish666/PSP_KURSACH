@@ -6,8 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class HomeAdminController extends AbstractController{
+public class HomeController extends AbstractController{
 
+    public Button usersButton;
+    public Button profileButton;
     @FXML
     private Button exitButton;
 
@@ -37,11 +39,22 @@ public class HomeAdminController extends AbstractController{
     @FXML
     void initialize() {
 
+        if(polzovatel.getCurrentUser().getRole() == 1) {
+            menuTitle.setText("Меню пользователя");
+            usersButton.setDisable(true);
+            usersButton.setVisible(false);
+            clientButton.setDisable(true);
+            clientButton.setVisible(false);
+
+        }
+
         exitButton.setOnAction((actionEvent -> {
             Platform.exit();
         }));
 
-
+        usersButton.setOnAction((actionEvent -> {
+            SceneManager.loadScene(scene, "/user-view.fxml");
+        }));
         clientButton.setOnAction((actionEvent -> {
             SceneManager.loadScene(scene, "/client-view.fxml");
         }));
