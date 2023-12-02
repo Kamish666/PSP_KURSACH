@@ -1,5 +1,7 @@
 package Kursach.client;
 
+import Kursach.shared.objects.User;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -7,6 +9,15 @@ import java.net.Socket;
 
 public class Polzovatel {
 
+    public User getCurrentUser() {
+        return current_user;
+    }
+
+    public void setCurrentUser(User current_user) {
+        this.current_user = current_user;
+    }
+
+    User current_user;
     private static Polzovatel instance;
 
     public static void setInstance(Polzovatel client) {

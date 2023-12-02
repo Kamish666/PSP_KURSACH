@@ -42,7 +42,6 @@ public class ProductController extends AbstractController implements ICrudContro
     Polzovatel polzovatel;
 
     ObservableList<ProductDto> observableList;
-
     List<ProductCategory> categories;
     List<ManufacturerDto> manufactures;
     List<Provider> providers;

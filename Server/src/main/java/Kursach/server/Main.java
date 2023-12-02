@@ -15,7 +15,6 @@ import java.util.List;
 
 
 public class Main {
-    final static String path = "КОД/SERVER/src/main/java/Server/.";
     private static Connection connection;
 
     public static Connection getConnection() {

@@ -30,14 +30,13 @@ public class MainController extends AbstractController{
 
     boolean hasAdmin;
 
-    Polzovatel client;
 
     public MainController() {
-        client = new Polzovatel("localhost", 2525);
+        polzovatel = new Polzovatel("localhost", 2525);
         try {
-            client.connect();
-            Polzovatel.setInstance(client);
-            hasAdmin = (Integer) client.receive() > 0;
+            polzovatel.connect();
+            Polzovatel.setInstance(polzovatel);
+            hasAdmin = (Integer) polzovatel.receive() > 0;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -88,23 +87,20 @@ public class MainController extends AbstractController{
                 return;
             }
             if(!hasAdmin) {
-                client.send(name);
+                polzovatel.send(name);
             }
-            client.send(login);
-            client.send(password);
+            polzovatel.send(login);
+            polzovatel.send(password);
 
-            System.out.println("sent data");
-            User user = (User)client.receive();
+            User user = (User)polzovatel.receive();
             if(user == null) {
                 errorMessage.setText("Неверный логин или пароль");
                 errorMessage.setVisible(true);
             } else {
-                errorMessage.setText("Вхожу!!1");
-                errorMessage.setFill(Color.GREEN);
-                errorMessage.setVisible(true);
 
+                polzovatel.setCurrentUser(user);
                 Scene current = errorMessage.getScene();
-                SceneManager.loadScene(current, "/home-admin-view.fxml");
+                SceneManager.loadScene(current, "/home-view.fxml");
             }
             System.out.println(user);
         });
