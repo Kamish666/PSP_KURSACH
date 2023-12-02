@@ -4,12 +4,20 @@ import java.time.LocalDateTime;
 
 public class OrderDto {
     private int id;
-    private String product;
-    private String client;
-
+    private Product product;
+    private Client client;
     private LocalDateTime dateTime;
-
     private int amount;
+
+    public OrderDto() {}
+
+    public OrderDto(int id, Product product, Client client, LocalDateTime dateTime, int amount) {
+        this.id = id;
+        this.product = product;
+        this.client = client;
+        this.dateTime = dateTime;
+        this.amount = amount;
+    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
@@ -27,13 +35,6 @@ public class OrderDto {
         this.amount = amount;
     }
 
-    public OrderDto(int id, String product, String client, LocalDateTime dateTime, int amount) {
-        this.id = id;
-        this.product = product;
-        this.client = client;
-        this.dateTime = dateTime;
-        this.amount = amount;
-    }
 
     public int getId() {
         return id;
@@ -43,25 +44,51 @@ public class OrderDto {
         this.id = id;
     }
 
-
-    public String getProduct() {
+    public Product getProduct() {
         return product;
     }
 
-    public void setProduct(String product) {
+    public void setProduct (Product product){
         this.product = product;
     }
 
-    public String getClient() {
+    public int getProductId() {
+        return product.getId();
+    }
+
+    public void setProductId (int id){
+        product.setId(id);
+    }
+
+    public String getProductName() {
+        return product.getName();
+    }
+
+    public void setProductName (String name){
+        product.setName(name);
+    }
+
+    public Client getClient() {
         return client;
     }
 
-    public void setClient(String client) {
+    public void setClient (Client client){
         this.client = client;
     }
 
+    public int getClientId() {
+        return client.getId();
+    }
 
+    public void setClientId (int id){
+        client.setId(id);
+    }
 
-    public OrderDto() {
+    public String getClientName() {
+        return client.getName();
+    }
+
+    public void setClientName (String name){
+        client.setName(name);
     }
 }
