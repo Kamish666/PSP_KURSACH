@@ -163,6 +163,7 @@ public class ClientHandler implements Runnable {
         try {
             while (true) {
                 Integer choice = (Integer) objectIn.readObject();
+                System.out.println("Recevied " + choice);
                 performOperation(choice);
             }
         } catch (Exception e) {

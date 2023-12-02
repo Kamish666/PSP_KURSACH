@@ -38,8 +38,7 @@ public class ManufacturerController extends AbstractController {
             SceneManager.getPreviousRoot(backButton.getScene());
         }));
 
-        list.add(new ManufacturerDto(69, "Производитель кала", "Беларусь"));
-        list.add(new ManufacturerDto(534, "Производитель софта", "Россия"));
+
 
         column.setCellValueFactory(manufacturer -> new SimpleStringProperty(manufacturer.getValue().getName()));
 
@@ -60,7 +59,6 @@ public class ManufacturerController extends AbstractController {
         if (item != null) {
             idText.setText(String.valueOf(item.getId()));
             nameText.setText(item.getName());
-            countryText.setText(item.getCountry());
         }
     }
 }

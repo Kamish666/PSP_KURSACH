@@ -45,13 +45,16 @@ public class ClientCRUD extends AbstractCrud {
 
     @Override
     protected void insert() {
+        System.out.println("Client insert");
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO client (name, email) VALUES (?, ?)");
             Client client = (Client) objectIn.readObject();
+            System.out.println("received " + client);
             try {
                 preparedStatement.setString(1, client.getName());
                 preparedStatement.setString(2, client.getEmail());
                 preparedStatement.execute();
+                System.out.println("inserted " + client);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -59,6 +62,7 @@ public class ClientCRUD extends AbstractCrud {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override

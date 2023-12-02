@@ -1,17 +1,15 @@
 package Kursach.server.CRUD;
 
-import Kursach.shared.objects.ProductDto1;
+import Kursach.shared.objects.ProductDto;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ProductCRUD extends AbstractCrud {
 
@@ -31,10 +29,10 @@ public class ProductCRUD extends AbstractCrud {
             ResultSet resultSetManufacturer = preparedStatementManufacturer.executeQuery();
             ResultSet resultSetCategory = preparedStatementCategory.executeQuery();
             ResultSet resultSetProvider = preparedStatementProvider.executeQuery();
-            List<ProductDto1> products = new ArrayList<>();
+            List<ProductDto> products = new ArrayList<>();
 
             while (resultSet.next()) {
-                ProductDto1 product = new ProductDto1();
+                ProductDto product = new ProductDto();
                 product.setId(resultSet.getInt("product_id"));
                 product.setName(resultSet.getString("name"));
                 product.setPrice(resultSet.getInt("price"));
@@ -72,7 +70,7 @@ public class ProductCRUD extends AbstractCrud {
     protected void insert() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO product (name, price, category_id, manufacturer_id, provider_id) VALUES (?, ?, ?, ?, ?)");
-            ProductDto1 product = (ProductDto1) objectIn.readObject();
+            ProductDto product = (ProductDto) objectIn.readObject();
             try {
                 preparedStatement.setString(1, product.getName());
                 preparedStatement.setDouble(2, product.getPrice());
@@ -93,7 +91,7 @@ public class ProductCRUD extends AbstractCrud {
     protected void update() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE product SET name = ?, price = ?, category_id = ?, manufacturer_id = ?, provider_id = ? WHERE product_id = ?");
-            ProductDto1 product = (ProductDto1) objectIn.readObject();
+            ProductDto product = (ProductDto) objectIn.readObject();
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.setInt(3, product.getCategoryId());
@@ -111,7 +109,7 @@ public class ProductCRUD extends AbstractCrud {
     protected void delete() {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM product WHERE product_id = ?");
-            ProductDto1 product = (ProductDto1) objectIn.readObject();
+            ProductDto product = (ProductDto) objectIn.readObject();
             preparedStatement.setInt(1, product.getId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
