@@ -95,7 +95,9 @@ public class ProductDto {
         return provider.getName();
     }
 
-    public void setProviderName(String name) { provider.setName(name); }
+    public void setProviderName(String name) {
+        provider.setName(name);
+    }
 
     public String getProviderEmail() {
         return provider.getEmail();
@@ -105,4 +107,21 @@ public class ProductDto {
         provider.setEmail(email);
     }
 
+    public void setCategory(ProductCategory category) {
+        this.category = category;
+    }
+
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
+    public ProductCategory getCategory() {return category;}
+
+    public Manufacturer getManufacturer() {return manufacturer; }
+
+    public Provider getProvider() {return provider; }
 }
