@@ -24,7 +24,7 @@ public class ManufacturerCRUD extends AbstractCrud {
             PreparedStatement preparedStatementCountry = connection.prepareStatement("SELECT country_name FROM country WHERE country_id = ?");
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            ResultSet resultSetCountry = preparedStatementCountry.executeQuery();
+
             List<ManufacturerDto> manufacturers = new ArrayList<>();
 
             while (resultSet.next()) {
@@ -32,6 +32,7 @@ public class ManufacturerCRUD extends AbstractCrud {
                 manufacturer.setId(resultSet.getInt("manufacturer_id"));
                 manufacturer.setName(resultSet.getString("manufacturer_name"));
                 manufacturer.setCountryId(resultSet.getInt("country_id"));
+                ResultSet resultSetCountry = preparedStatementCountry.executeQuery();
                 preparedStatementCountry.setInt(1, resultSet.getInt("country_id"));
                 manufacturer.setCountryName(resultSetCountry.getString("country_name"));
                 manufacturers.add(manufacturer);

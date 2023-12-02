@@ -1,6 +1,8 @@
 package Kursach.shared.objects;
 
-public class ProductCategory {
+import java.io.Serializable;
+
+public class ProductCategory implements Serializable {
         private int id;
         private String category;
         private String definition;

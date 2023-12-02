@@ -47,7 +47,10 @@ public class Polzovatel {
         }
     }
 
-
+    public Object receive(Object object) {
+        send(object);
+        return receive();
+    }
     public Object receive() {
         try {
             System.out.println("receiving");
