@@ -1,10 +1,9 @@
 package Kursach.shared.objects;
 
 
+import java.io.Serializable;
 
-
-
-public class ManufacturerDto {
+public class ManufacturerDto implements Serializable {
     private int id;
     private String name;
     private Country country;
@@ -25,6 +24,10 @@ public class ManufacturerDto {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Country getCountry() { return country; }
+
+    public void setCountry(Country country) {this.country = country;  }
 
     public String getCountryName() {
         return country.getCountry();

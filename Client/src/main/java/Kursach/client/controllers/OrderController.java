@@ -56,15 +56,7 @@ public class OrderController extends AbstractController {
 
     @FXML
     void onClick() {
-        OrderDto item = (OrderDto) table.getSelectionModel().getSelectedItem();
 
-        if (item != null) {
-            idText.setText(String.valueOf(item.getId()));
-            productTest.setText(item.getProduct());
-            clientText.setText(item.getClient());
-            dateText.setText(Order.dateToString(item.getDateTime()));
-            amountText.setText(String.valueOf(item.getAmount()));
-        }
     }
 
 }

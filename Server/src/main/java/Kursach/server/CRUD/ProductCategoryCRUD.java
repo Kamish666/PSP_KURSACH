@@ -33,7 +33,7 @@ public class ProductCategoryCRUD extends AbstractCrud{
             List<ProductCategory> productCategorys = new ArrayList<>();
             while (resultSet.next()) {
                 ProductCategory productCategory = new ProductCategory(
-                        resultSet.getInt("product_category"),
+                        resultSet.getInt("product_category_id"),
                         resultSet.getString("category"),
                         resultSet.getString("definition")
                 );
@@ -57,7 +57,7 @@ public class ProductCategoryCRUD extends AbstractCrud{
             ProductCategory productCategory = (ProductCategory) objectIn.readObject();
             try {
                 preparedStatement.setString(1, productCategory.getCategory());
-                preparedStatement.setString(1, productCategory.getDefinition());
+                preparedStatement.setString(2, productCategory.getDefinition());
                 preparedStatement.execute();
             } catch (SQLException e) {
                 e.printStackTrace();
