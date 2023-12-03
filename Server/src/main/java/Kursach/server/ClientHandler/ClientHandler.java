@@ -21,6 +21,9 @@ public class ClientHandler implements Runnable {
     private final OrdersCRUD ordersCrud;
     private  CountryCRUD countryCrud;
     private  ProviderCRUD providerCrud;
+
+    private PersonalProfile personalProfile;
+
     private Scanner scanner;
     private PrintWriter writer;
     private Socket clientSocket;
@@ -46,6 +49,7 @@ public class ClientHandler implements Runnable {
         manufacturerCrud = new ManufacturerCRUD(objectIn, objectOut);
         productCrud = new ProductCRUD(objectIn, objectOut);
         ordersCrud = new OrdersCRUD(objectIn, objectOut);
+        personalProfile = new PersonalProfile(objectIn, objectOut);
 
     }
 
@@ -76,6 +80,8 @@ public class ClientHandler implements Runnable {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 id = resultSet.getInt("user_id");
+                userCrud.setId(id);
+                personalProfile.setId(id);
                 role = resultSet.getInt("role");
                 return true;
             }
@@ -143,6 +149,7 @@ public class ClientHandler implements Runnable {
             case 6 -> manufacturerCrud;
             case 7 -> productCrud;
             case 8 -> ordersCrud;
+            case 9 -> personalProfile;
             default -> {
                 throw new RuntimeException("Как же круто что число выбирает операции, а не енам, но мне впадлу енам делать уже, поэтому страдай исключением");
             }

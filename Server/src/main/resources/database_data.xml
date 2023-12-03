@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <database>
-    <connection.url>jdbc:mysql://localhost:6969/product_accounting</connection.url>
+    <connection.url>jdbc:mysql://localhost:3306/product_accounting</connection.url>
     <name>root</name>
-    <password>root</password>
+    <password>1213</password>
 </database>
