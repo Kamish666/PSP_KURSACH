@@ -43,8 +43,6 @@ public class HomeController extends AbstractController{
             menuTitle.setText("Меню пользователя");
             usersButton.setDisable(true);
             usersButton.setVisible(false);
-            clientButton.setDisable(true);
-            clientButton.setVisible(false);
 
         }
 

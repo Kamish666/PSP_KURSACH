@@ -10,45 +10,43 @@
 <?import javafx.scene.text.Text?>
 
 <VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kursach.client.controllers.MainController">
-   <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="197.0" text="ВХОД">
-         <font>
-            <Font size="52.0" />
-         </font>
-         <VBox.margin>
-            <Insets bottom="25.0" top="10.0" />
-         </VBox.margin>
-      </Label>
-      <TextField fx:id="nameField" maxWidth="-Infinity" prefHeight="32.0" prefWidth="250.0" promptText="Имя">
-         <VBox.margin>
-            <Insets bottom="8.0" />
-         </VBox.margin>
-      </TextField>
-      <TextField fx:id="loginField" maxWidth="-Infinity" prefHeight="32.0" prefWidth="250.0" promptText="Логин">
-         <VBox.margin>
-            <Insets bottom="8.0" />
-         </VBox.margin>
-      </TextField>
-      <PasswordField fx:id="passwordField" maxWidth="-Infinity" prefHeight="32.0" prefWidth="250.0" promptText="Пароль">
-         <VBox.margin>
-            <Insets bottom="8.0" />
-         </VBox.margin>
-      </PasswordField>
-      <Button fx:id="logInButton" alignment="CENTER" mnemonicParsing="false" prefHeight="47.0" prefWidth="125.0" text="Кнопка">
-         <font>
-            <Font size="22.0" />
-         </font>
-         <VBox.margin>
-            <Insets top="40.0" />
-         </VBox.margin>
-      </Button>
-      <Text fx:id="errorMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Ошибка" visible="false">
-         <VBox.margin>
-            <Insets bottom="15.0" top="25.0" />
-         </VBox.margin>
-      </Text>
-   </children>
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
+   <Label fx:id="labelTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="75.0" prefWidth="433.0" text="Авторизация">
+      <font>
+         <Font size="52.0" />
+      </font>
+      <VBox.margin>
+         <Insets bottom="25.0" top="10.0" />
+      </VBox.margin>
+   </Label>
+   <TextField fx:id="nameField" maxWidth="-Infinity" prefHeight="32.0" prefWidth="250.0" promptText="Имя">
+      <VBox.margin>
+         <Insets bottom="8.0" />
+      </VBox.margin>
+   </TextField>
+   <TextField fx:id="loginField" maxWidth="-Infinity" prefHeight="32.0" prefWidth="250.0" promptText="Логин">
+      <VBox.margin>
+         <Insets bottom="8.0" />
+      </VBox.margin>
+   </TextField>
+   <PasswordField fx:id="passwordField" maxWidth="-Infinity" prefHeight="32.0" prefWidth="250.0" promptText="Пароль">
+      <VBox.margin>
+         <Insets bottom="8.0" />
+      </VBox.margin>
+   </PasswordField>
+   <Button fx:id="logInButton" alignment="CENTER" minWidth="125" mnemonicParsing="false" prefHeight="86.0" prefWidth="215.0" text="Кнопка">
+      <font>
+         <Font size="22.0" />
+      </font>
+      <VBox.margin>
+         <Insets top="40.0" />
+      </VBox.margin>
+   </Button>
+   <Text fx:id="errorMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Ошибка" visible="false">
+      <VBox.margin>
+         <Insets bottom="15.0" top="25.0" />
+      </VBox.margin>
+   </Text>
 </VBox>
