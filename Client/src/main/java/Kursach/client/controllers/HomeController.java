@@ -43,8 +43,6 @@ public class HomeController extends AbstractController{
             menuTitle.setText("Меню пользователя");
             usersButton.setDisable(true);
             usersButton.setVisible(false);
-            clientButton.setDisable(true);
-            clientButton.setVisible(false);
 
         }
 
@@ -77,6 +75,9 @@ public class HomeController extends AbstractController{
             SceneManager.loadScene(scene, "/country-view.fxml");
         });
 
+        profileButton.setOnAction(actionEvent -> {
+            SceneManager.loadScene(scene, "/profile-view.fxml");
+        });
 
     }
 
