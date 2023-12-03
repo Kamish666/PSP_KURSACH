@@ -124,6 +124,7 @@ public class ClientHandler implements Runnable {
             }
             System.out.println("authorized");
             user.setRole(role);
+            user.setId(id);
             objectOut.writeObject(user);
             objectOut.flush();
 

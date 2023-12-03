@@ -24,8 +24,8 @@ public class PersonalProfile extends AbstractCrud{
         this.id = id;
     }
 
-    protected void insert(){}
-    protected void delete(){}
+    protected void insert(){ throw new RuntimeException("Куда ты лезешь даун"); }
+    protected void delete(){ throw new RuntimeException("Сюда нельзя мудила"); }
 
     @Override
     protected void select() {
@@ -33,8 +33,7 @@ public class PersonalProfile extends AbstractCrud{
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            List<User> users = new ArrayList<>();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 User user = new User(
                         resultSet.getInt("user_id"),
                         resultSet.getString("name"),
@@ -42,11 +41,9 @@ public class PersonalProfile extends AbstractCrud{
                         resultSet.getString("password"),
                         resultSet.getInt("role")
                 );
-                users.add(user);
+                System.out.println(user);
+                objectOut.writeObject(user);
             }
-            System.out.println(users);
-            objectOut.writeObject(users);
-
 
             resultSet.close();
             preparedStatement.close();
@@ -59,11 +56,12 @@ public class PersonalProfile extends AbstractCrud{
     @Override
     protected void update() {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET login = ?, password = ? WHERE user_id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET  login = ?, password = ?, name = ? WHERE user_id = ?");
             User user = (User) objectIn.readObject();
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setInt(3, user.getId());
+            preparedStatement.setString(3, user.getName());
+            preparedStatement.setInt(4, user.getId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (Exception e) {

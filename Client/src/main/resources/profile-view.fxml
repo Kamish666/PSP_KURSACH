@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" prefHeight="534.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Kursach.client.controllers.ProfileController">
+   <AnchorPane prefHeight="644.0" prefWidth="724.0">
+      <VBox layoutX="292.0" layoutY="220.0" prefHeight="67.0" prefWidth="140.0" spacing="10.0">
+         <TextField fx:id="nameField" />
+         <TextField fx:id="loginField"/>
+         <TextField fx:id="passwordField" />
+      </VBox>
+      <VBox alignment="TOP_RIGHT" layoutX="192.0" layoutY="220.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Имя" />
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Логин" />
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль" />
+      </VBox>
+      <Button fx:id="saveButton" layoutX="395.0" layoutY="342.0" mnemonicParsing="false" style="-fx-background-color: #50FF50;" text="Сохранить" />
+      <Button fx:id="resetButton" layoutX="258.0" layoutY="342.0" mnemonicParsing="false" style="-fx-background-color: #FF5050;" text="Сбросить" />
+      <Button fx:id="backButton" layoutX="14.0" layoutY="343.0" mnemonicParsing="false" text="Назад" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
+   </AnchorPane>
+</VBox>
