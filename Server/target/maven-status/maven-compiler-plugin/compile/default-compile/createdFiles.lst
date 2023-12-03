@@ -1,0 +1,12 @@
+Kursach\server\CRUD\ManufacturerCRUD.class
+Kursach\server\CRUD\OrdersCRUD.class
+Kursach\server\CRUD\ProductCategoryCRUD.class
+Kursach\server\ConnectDB\ReaderDBdata.class
+Kursach\server\CRUD\ProviderCRUD.class
+Kursach\server\CRUD\ProductCRUD.class
+Kursach\server\Main.class
+Kursach\server\ClientHandler\ClientHandler.class
+Kursach\server\CRUD\AbstractCrud.class
+Kursach\server\CRUD\ClientCRUD.class
+Kursach\server\CRUD\CountryCRUD.class
+Kursach\server\CRUD\UserCRUD.class

@@ -14,15 +14,21 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UserCRUD extends AbstractCrud {
+
+    int id;
     public UserCRUD(ObjectInputStream objectIn, ObjectOutputStream objectOut) throws IOException {
         super(objectIn, objectOut);
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
 
     @Override
     protected void select() {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user");
-
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE user_id <> ?");
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<User> users = new ArrayList<>();
             while (resultSet.next()) {
