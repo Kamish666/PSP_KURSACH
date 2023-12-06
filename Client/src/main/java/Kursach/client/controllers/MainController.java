@@ -6,6 +6,7 @@ import Kursach.shared.objects.User;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.stream.Stream;
 
 public class MainController extends AbstractController{
+    public Label labelTitle;
     @FXML
     private Button logInButton;
     @FXML
