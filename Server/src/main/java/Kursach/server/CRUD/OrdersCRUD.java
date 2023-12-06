@@ -18,22 +18,28 @@ import java.util.Scanner;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-public class OrdersCRUD extends AbstractCrud{
-
-
+public class OrdersCRUD extends AbstractCrud {
 
 
     Scanner scanner;
+
     public OrdersCRUD(ObjectInputStream objectIn, ObjectOutputStream objectOut) throws IOException {
         super(objectIn, objectOut);
     }
 
     @Override
     protected void select() {
+
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM orders");
-            PreparedStatement preparedStatementProduct = connection.prepareStatement("SELECT * FROM product WHERE product_id = ?");
-            PreparedStatement preparedStatementClient = connection.prepareStatement("SELECT * FROM client WHERE client_id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("""
+                    SELECT
+                    o.orders_id, o.date, o.amount,
+                    p.product_id, p.name AS product_name, p.price, p.category_id, p.manufacturer_id, p.provider_id,
+                    c.client_id, c.name AS client_name, c.email
+                    FROM orders o
+                    JOIN product p ON o.product_id = p.product_id
+                    JOIN client c ON o.client_id = c.client_id
+                    """);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             List<OrderDto> orders = new ArrayList<>();
@@ -45,31 +51,22 @@ public class OrdersCRUD extends AbstractCrud{
                 order.setDateTime(timestamp.toLocalDateTime());
                 order.setAmount(resultSet.getInt("amount"));
 
-                preparedStatementProduct.setInt(1, resultSet.getInt("product_id"));
-                ResultSet resultSetProduct = preparedStatementProduct.executeQuery();
-                resultSetProduct.next();
                 Product product = new Product(
-                        resultSetProduct.getInt("product_id"),
-                        resultSetProduct.getString("name"),
-                        resultSetProduct.getDouble("price"),
-                        resultSetProduct.getInt("category_id"),
-                        resultSetProduct.getInt("manufacturer_id"),
-                        resultSetProduct.getInt("provider_id")
-
+                        resultSet.getInt("product_id"),
+                        resultSet.getString("product_name"),
+                        resultSet.getDouble("price"),
+                        resultSet.getInt("category_id"),
+                        resultSet.getInt("manufacturer_id"),
+                        resultSet.getInt("provider_id")
                 );
                 order.setProduct(product);
-                resultSetProduct.close();
 
-                preparedStatementClient.setInt(1, resultSet.getInt("client_id"));
-                ResultSet resultSetClient = preparedStatementClient.executeQuery();
-                resultSetClient.next();
                 Client client = new Client(
-                        resultSetClient.getInt("client_id"),
-                        resultSetClient.getString("name"),
-                        resultSetClient.getString("email")
+                        resultSet.getInt("client_id"),
+                        resultSet.getString("client_name"),
+                        resultSet.getString("email")
                 );
                 order.setClient(client);
-                resultSetClient.close();
 
                 orders.add(order);
             }
@@ -77,12 +74,12 @@ public class OrdersCRUD extends AbstractCrud{
             System.out.println(orders);
             objectOut.writeObject(orders);
 
-
             resultSet.close();
             preparedStatement.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
