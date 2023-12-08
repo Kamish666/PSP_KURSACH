@@ -83,7 +83,7 @@ public class MainController extends AbstractController{
                 errorMessage.setVisible(true);
                 return;
             }
-            if(!hasAdmin && name.length() < 1) {
+            if(!hasAdmin && name.isEmpty()) {
                 errorMessage.setText("Некорректный логин");
                 errorMessage.setVisible(true);
                 return;
