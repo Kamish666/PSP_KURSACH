@@ -75,6 +75,9 @@ public class HomeController extends AbstractController{
             SceneManager.loadScene(scene, "/country-view.fxml");
         });
 
+        profileButton.setOnAction(actionEvent -> {
+            SceneManager.loadScene(scene, "/profile-view.fxml");
+        });
 
     }
 
